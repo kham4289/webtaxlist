@@ -1,0 +1,138 @@
+#root {
+  padding: 0;
+
+  margin: 0 0;
+
+  font-family: "Noto sans lao";
+  ---formColor: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style the header */
+.container {
+  margin: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* grid-template-columns: 2frbo; */
+}
+.req {
+  color: red;
+}
+
+.form {
+  display: grid;
+  column-gap: 1rem;
+  padding: 1rem;
+  row-gap: 0.5rem;
+  /* flex-direction: column; */
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.box {
+  /* padding: 2rem 2rem 0px 2rem; */
+  background-color: var(---formColor);
+  border-radius: 0.7rem;
+  min-height: 400px;
+  padding: 1rem;
+}
+
+.bottom-form {
+  background-color: #f9fafb;
+  border-bottom-left-radius: 0.7rem;
+  border-bottom-right-radius: 0.7rem;
+  text-align: end;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 900px) {
+  /* For mobile phones: */
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  width: 100%;
+}
+.table {
+
+  border: 1px solid #2b2c2c;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 50px;
+}
+td,
+th {
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  /* background-color: #f8f9fa; */
+}
+.formtax {
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  color: #2b2c2c;
+}
+.address{
+  border: none;
+  outline: none;
+  font-family: noto sans lao;
+  font-size: 16px;
+  background: none;
+  max-width: 116px;
+  color: #2b2c2c;
+}
+.province{
+  border: none;
+  outline: none;
+  font-family: noto sans lao;
+  font-size: 16px;
+  background: none;
+  max-width: 200px;
+  color: #2b2c2c;
+}
+.inputtax{
+  border: none;
+  outline: none;
+  font-family: noto sans lao;
+  font-size: 16px;
+  font-weight: bold;
+  background: none;
+  width: 70%;
+  color: #2b2c2c;
+}
+.customers {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.customers td, #customers th {
+  border: 1px solid #ddd;
+}
+
+.customers tr:nth-child(even){background-color: #f2f2f2;}
+
+.customers tr:hover {background-color: #ddd;}
+
+.customers th {
+  text-align: left;
+  background-color: #e6f7f0;
+  color: white;
+}
+
+
+    
