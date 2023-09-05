@@ -28,6 +28,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { ValueContext } from "../../context/value.context";
+// import Displays from "../../components/Displays";
 
 export default function AllTax() {
   const [open, setOpen] = useState(false);
@@ -317,6 +318,7 @@ export default function AllTax() {
               label="ຄົນຫາ...! ເລກອິນວອຍ"
             />
           </Stack>
+          {/* <Displays/> */}
           <Dialog
             open={open}
             onClose={handleClose}

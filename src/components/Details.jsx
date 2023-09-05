@@ -129,8 +129,8 @@ export default function Details({ data }) {
                 </p>
                 <p>ໂທລະສັບ: {val.TIN}</p>
                 <p>
-                  ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ:
-                  <input autoComplete="off" className="inputtax" />
+                  ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: {val.BY_TIN}
+                  
                 </p>
               </div>
               <Table size="small">
