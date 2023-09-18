@@ -76,12 +76,6 @@ export const ValueProvider = (props) => {
     setSecond(secondIntial);
   };
 
-  //  const [state, dispatch] = useReducer(postTextreducer, {
-  //    success: false,
-  //    err: false,
-  //    loading: false,
-  //  });
-
   const handleSubmitFinal = (e) => {
     e.preventDefault();
     // toast.success("Successfully !", { position: toast.POSITION.TOP_RIGHT });

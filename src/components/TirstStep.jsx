@@ -52,38 +52,3 @@ function TirstStep() {
 }
 
 export default TirstStep;
-
-{
-  /* <div
-      style={{
-        backgroundColor: "#ffffff",
-        borderRadius: "2rem",
-        boxShadow: "2px 3px 16px rgba(0, 0, 0, 0.25)",
-        padding: "2rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: "1rem",
-      }}
-      >
-        <hr />
-
-        <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          marginRight: "2rem",
-          marginTop: "1rem",
-        }}
-        >
-          {multiStep.list !== null ? (
-            multiStep.list.map((item, index) => (
-              <CardItemData key={index} item={item} />
-            ))
-          ) : (
-            <p>nodata</p>
-          )}
-        </div>
-      </div> */
-}

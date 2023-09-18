@@ -102,7 +102,7 @@ export default function Details({ data }) {
                   ນະຄອນຫຼວງວຽງຈັນ
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
-                <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </p>
+                <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: {val.TIN} </p>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
@@ -111,9 +111,7 @@ export default function Details({ data }) {
                     autoComplete="off"
                     className="inputtax"
                     value={
-                      updateFullName !== "" || isTyping
-                        ? updateFullName
-                        : val.BY_FULL_NM
+                      updateFullName !== "" || isTyping ? updateFullName : val.BY_FULL_NM
                     }
                   />
                 </h4>
@@ -129,7 +127,7 @@ export default function Details({ data }) {
                 </p>
                 <p>ໂທລະສັບ: {val.TIN}</p>
                 <p>
-                  ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: {val.BY_TIN}
+                  ເລກບັດປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}
                   
                 </p>
               </div>
