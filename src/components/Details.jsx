@@ -61,10 +61,10 @@ export default function Details({ data }) {
                 outline: "none",
               }}
             >
-              <h2 style={{ textAlign: "center" }}>
+              <h2 style={{ textAlign: "center", paddingTop: "16px" }}>
                 ໃບຮັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE
               </h2>
-              <div
+              {/* <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr 1fr",
@@ -80,21 +80,22 @@ export default function Details({ data }) {
                     justifyContent: "center",
                     alignItems: "center",
                   }}
-                ></div>
+                ></div> */}
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "end",
                     alignItems: "end",
-                    paddingTop: "15px",
+                    paddingTop: "10px",
                   }}
                 >
-                  <p>ເລກທີ: {val.Transid}</p>
+                  <span>ເລກທີ: {val.Transid}</span>
                   <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p>
+                  <span style={{ textAlign: "end" }}>ວັນທີ: {date}</span>
                 </div>
-              </div>
-              <p style={{ textAlign: "end" }}>ວັນທີ: {date}</p>
+              {/* </div> */}
+              
               <div>
                 <h4>ຊື່ວິສະຫະກິດ (ຸ ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
                 <p>
