@@ -22,7 +22,7 @@ function FirstStep() {
             <div className="form">
               <MyTextField
                 autoComplete="off"
-                label="Taxpayer ID/ ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ"
+                label="Taxpayer/ ເບີໂທ"
                 name="TIN"
                 value={multiStep.first.TIN}
                 onChange={multiStep.handleChange1}
@@ -46,7 +46,7 @@ function FirstStep() {
               /> */}
               <MyTextField
                 autoComplete="off"
-                label="Buyer TIN/ ລະຫັດຜູ້ຊື້ ຫຼື ເລກປະຈຳຕົວ"
+                label="Buyer TIN/ ເລກປະຈຳຕົວຜູ້ຊື້ ຫຼື ລະຫັດ"
                 name="BY_TIN"
                 value={multiStep.first.BY_TIN}
                 onChange={multiStep.handleChange1}

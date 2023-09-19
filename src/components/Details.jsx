@@ -46,7 +46,7 @@ export default function Details({ data }) {
         style={{
           width: "100%",
           height: "100%",
-        //   marginBottom: "20px",
+          //   marginBottom: "20px",
           backgroundImage: `url(${Bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -102,7 +102,7 @@ export default function Details({ data }) {
                   ນະຄອນຫຼວງວຽງຈັນ
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
-                <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: {val.TIN} </p>
+                <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </p>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
@@ -111,7 +111,9 @@ export default function Details({ data }) {
                     autoComplete="off"
                     className="inputtax"
                     value={
-                      updateFullName !== "" || isTyping ? updateFullName : val.BY_FULL_NM
+                      updateFullName !== "" || isTyping
+                        ? updateFullName
+                        : val.BY_FULL_NM
                     }
                   />
                 </h4>
@@ -126,10 +128,7 @@ export default function Details({ data }) {
                   <input autoComplete="off" className="province" />
                 </p>
                 <p>ໂທລະສັບ: {val.TIN}</p>
-                <p>
-                  ເລກບັດປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}
-                  
-                </p>
+                <p>ເລກບັດປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
               </div>
               <Table size="small">
                 <TableHead>
