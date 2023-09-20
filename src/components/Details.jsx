@@ -12,6 +12,7 @@ import {
 import { NumericFormat } from "react-number-format";
 import { ValueContext } from "../context/value.context";
 import Bg from "../assets/picture/BG12.png";
+// import { Pages } from "@mui/icons-material";
 // import Bg from "../assets/picture/BG.11.png";
 
 export default function Details({ data }) {
@@ -44,12 +45,15 @@ export default function Details({ data }) {
       <div
         ref={multiPrint.componentPDF}
         style={{
+          orientation:"portrait",
           width: "100%",
-          height: "100%",
+          height: "1120px",
           //   marginBottom: "20px",
           backgroundImage: `url(${Bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
+          marginBottom: 10,
+          // pageBreakBefore: "always"
         }}
       >
         {taxData.map((val, index) => {
@@ -57,8 +61,10 @@ export default function Details({ data }) {
             <Typography
               key={index}
               style={{
-                padding: "1rem 4rem ",
+                padding: "1.5rem 4rem ",
+                paddingBottom: "20px",
                 outline: "none",
+                fontSize: "14px",
               }}
             >
               <h2 style={{ textAlign: "center", paddingTop: "16px" }}>
@@ -87,7 +93,7 @@ export default function Details({ data }) {
                     flexDirection: "column",
                     justifyContent: "end",
                     alignItems: "end",
-                    paddingTop: "10px",
+                    paddingTop: "1px",
                   }}
                 >
                   <span>ເລກທີ: {val.Transid}</span>
@@ -97,13 +103,13 @@ export default function Details({ data }) {
               {/* </div> */}
               
               <div>
-                <h4>ຊື່ວິສະຫະກິດ (ຸ ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
+                <h4>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
                 <p>
                   ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ ຈັນທະບູລີ,
                   ນະຄອນຫຼວງວຽງຈັນ
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
-                <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </p>
+                <span>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </span>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
@@ -131,7 +137,7 @@ export default function Details({ data }) {
                 <p>ໂທລະສັບ: {val.TIN}</p>
                 <p>ເລກບັດປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
               </div>
-              <Table size="small">
+              <Table size="small" style={{fontSize: "14px"}}>
                 <TableHead>
                   <TableRow>
                     <TableCell>ລ/ດ</TableCell>

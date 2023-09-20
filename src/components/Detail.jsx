@@ -59,11 +59,11 @@ export default function Detail({ data }) {
     content: () => componentPDF.current,
 
     onAfterPrint: () => {
-      toast.success("Successfully !", { position: toast.POSITION.TOP_RIGHT })
-          setTimeout(() => {
-            // window.location.reload();
-          }, 3000);
-      }
+      toast.success("Successfully !", { position: toast.POSITION.TOP_RIGHT });
+      setTimeout(() => {
+        // window.location.reload();
+      }, 3000);
+    },
   });
 
   const handleUpdate = (e) => {
@@ -104,7 +104,7 @@ export default function Detail({ data }) {
               <div key={index}>
                 <DialogContent
                   style={{
-                    padding: "3rem 4rem ",
+                    padding: "3rem 3rem ",
                     outline: "none",
                   }}
                 >
@@ -115,48 +115,41 @@ export default function Detail({ data }) {
                     <div
                       style={{
                         display: "grid",
-                        gridTemplateColumns: "1fr 1fr 1fr",
+                        gridTemplateColumns: "3fr 0fr 1.5fr",
                         width: "100%",
-                        marginBottom: 20,
+                        // marginBottom: 0,
+                        paddingTop: 25,
                       }}
                     >
-                      <div></div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        {/* <h3>ໃບຮັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE</h3>
-                        <p>/TAX INVOICE</p> */}
+                      <div>
+                        <h4>
+                          ຊື່ວິສະຫະກິດ (ຸ ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ
+                        </h4>
+                        <span>
+                          ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ ຈັນທະບູລີ,
+                          ນະຄອນຫຼວງວຽງຈັນ
+                        </span>
+                        <p>ໂທລະສັບ: 020 77800700 </p>
                       </div>
+                      <div></div>
                       <div
                         style={{
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "end",
                           alignItems: "end",
-                          paddingTop: "15px",
                         }}
                       >
-                        <p>ເລກທີ: {val.Transid}</p>
+                        <span>ເລກທີ: {val.Transid}</span>
                         <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p>
+                        <span style={{ textAlign: "end" }}>ວັນທີ: {date}</span>
                       </div>
+                      <span>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </span>
                     </div>
-                    <p style={{ textAlign: "end" }}>ວັນທີ: {date}</p>
                   </Typography>
-
-                  <Typography id="" sx={{ mt: 2 }}>
-                    <h4>ຊື່ວິສະຫະກິດ (ຸ ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
-                    <p>
-                      ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ ຈັນທະບູລີ,
-                      ນະຄອນຫຼວງວຽງຈັນ
-                    </p>
-                    <p>ໂທລະສັບ: 020 77800700 </p>
+                  {/* <Typography id="" sx={{ mt: 0 }}>
                     <p>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </p>
-                  </Typography>
+                  </Typography> */}
                   <Typography>
                     <h4>
                       ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) : {""}
@@ -195,7 +188,7 @@ export default function Detail({ data }) {
 
                     <TableContainer>
                       <Table
-                        sx={{ minWidth: "100%",  borderBottom: "none" }}
+                        sx={{ minWidth: "100%", borderBottom: "none" }}
                         size="small"
                       >
                         <TableHead>

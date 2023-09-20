@@ -13,6 +13,7 @@ import {
 
 import {} from "@mui/material";
 import Details from "../../components/Details";
+import Detail from "../../components/Detail";
 import * as React from "react";
 import { Stack } from "@mui/system";
 import { useSearchParams, useLocation } from "react-router-dom";
@@ -318,7 +319,6 @@ export default function AllTax() {
               label="ຄົນຫາ...! ເລກອິນວອຍ"
             />
           </Stack>
-          {/* <Displays/> */}
           <Dialog
             open={open}
             onClose={handleClose}
