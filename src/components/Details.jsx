@@ -48,7 +48,8 @@ export default function Details({ data }) {
           orientation:"portrait",
           width: "100%",
           height: "1120px",
-          //   marginBottom: "20px",
+            // marginBottom: "20px",
+            // marginTop: "20px",
           backgroundImage: `url(${Bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -105,11 +106,11 @@ export default function Details({ data }) {
               <div>
                 <h4>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
                 <p>
-                  ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ ຈັນທະບູລີ,
+                  ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ: ຈັນທະບູລີ,
                   ນະຄອນຫຼວງວຽງຈັນ
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
-                <span>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 5566102964-900 </span>
+                <span>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
