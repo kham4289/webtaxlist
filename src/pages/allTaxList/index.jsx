@@ -69,6 +69,7 @@ export default function AllTax() {
       .then((data) => {
         setTaxData(data.dataaray);
         setTaxCount(data.rowcount);
+        console.log(data.dataaray);
       })
       .catch((err) => console.log(err));
     // }
@@ -172,6 +173,8 @@ export default function AllTax() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
@@ -180,6 +183,7 @@ export default function AllTax() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    
                   />
                 </td>
                 <td>
@@ -196,6 +200,8 @@ export default function AllTax() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
@@ -204,6 +210,8 @@ export default function AllTax() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>

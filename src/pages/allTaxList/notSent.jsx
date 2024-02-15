@@ -134,6 +134,8 @@ export default function NotSent() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
@@ -158,6 +160,8 @@ export default function NotSent() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
@@ -166,6 +170,8 @@ export default function NotSent() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
@@ -174,6 +180,7 @@ export default function NotSent() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    
                   />
                 </td>
                 <td>{format(new Date(val.CDATE), "dd/MM/yyyy")}</td>

@@ -95,24 +95,7 @@ export const ValueProvider = (props) => {
        setTimeout(() => {}, 2000);
      },
    });
-
-  // const generatePDF = () => {
-  //  const input = componentPDF.current;
-  //  html2canvas(input).then((canvas) =>{
-  //   const imgData = canvas.toDataURL('image/png');
-  //   const pdf = new jsPDF('p','mm','A4', true);
-  //   const pdfWidth = pdf.internal.pageSize.getWidth();
-  //   const pdfHeight = pdf.internal.pageSize.getHeight();
-  //   const imgWidth = canvas.width;
-  //   const imgHeight = canvas.height;
-  //   const ratio = Math.min(pdfWidth/ imgWidth, pdfHeight/imgHeight);
-  //   const imgX = (pdfWidth - imgWidth * ratio) / 1;
-  //   const imgY = 10;
-  //   pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-  //   pdf.save('taxinvoice.pdf');
-  //  });
-  // };
-
+   
   return (
     <ValueContext.Provider
       value={{

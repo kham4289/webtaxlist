@@ -95,10 +95,11 @@ export default function Details({ data }) {
                     justifyContent: "end",
                     alignItems: "end",
                     paddingTop: "1px",
+                    gap: "5px",
                   }}
                 >
                   <span>ເລກທີ: {val.Transid}</span>
-                  <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p>
+                  {/* <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p> */}
                   <span style={{ textAlign: "end" }}>ວັນທີ: {date}</span>
                 </div>
               {/* </div> */}
@@ -110,7 +111,8 @@ export default function Details({ data }) {
                   ນະຄອນຫຼວງວຽງຈັນ
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
-                <span>ເລກບັດປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
+                <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
+                <p>ເລກບັນຊີບໍລິສັດ:</p>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
@@ -136,7 +138,8 @@ export default function Details({ data }) {
                   <input autoComplete="off" className="province" />
                 </p>
                 <p>ໂທລະສັບ: {val.TIN}</p>
-                <p>ເລກບັດປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
+                <p>ເລກປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
+                <p>ເລກບັນຊີຜູ້ຊື້:</p>
               </div>
               <Table size="small" style={{fontSize: "14px"}}>
                 <TableHead>
@@ -154,8 +157,8 @@ export default function Details({ data }) {
                     <TableBody key={index}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{item.HS_NM}</TableCell>
-                      <TableCell align="right">{item.UNIT_SALE}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">{item.UNIT_SALE}</TableCell>
+                      <TableCell align="center">
                         <NumericFormat
                           value={item.SALE_CNT}
                           displayType="text"
@@ -169,6 +172,7 @@ export default function Details({ data }) {
                           displayType="text"
                           thousandSeparator=","
                           allowLeadingZeros
+                          
                         />
                       </TableCell>
                       <TableCell align="right">
@@ -178,6 +182,8 @@ export default function Details({ data }) {
                           displayType="text"
                           thousandSeparator=","
                           allowLeadingZeros
+                          decimalScale={2}
+                          fixedDecimalScale={true}
                         />
                       </TableCell>
                     </TableBody>
@@ -193,9 +199,7 @@ export default function Details({ data }) {
                   displayType={"text"}
                   decimalScale={2}
                   allowLeadingZeros
-                  allowNegative
                   thousandSeparator=","
-                  decimalSeparator="."
                 />
               </p>
               <p style={{ textAlign: "end" }}>
@@ -206,9 +210,7 @@ export default function Details({ data }) {
                   displayType={"text"}
                   decimalScale={2}
                   allowLeadingZeros
-                  allowNegative
                   thousandSeparator=","
-                  decimalSeparator="."
                 />
                 {/* {val.VAT_AMT} */}
               </p>
@@ -220,9 +222,8 @@ export default function Details({ data }) {
                   displayType={"text"}
                   decimalScale={2}
                   allowLeadingZeros
-                  allowNegative
                   thousandSeparator=","
-                  decimalSeparator="."
+                
                 />
               </h4>
               <p>ຈຳນວນເງິນທີ່ຂຽນເປັນຕົວໜັງສື: {val.amtConvert}</p>
