@@ -27,6 +27,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { ValueContext } from "../../context/value.context";
+import { useCancel } from "../../hooks/useDatafinal";
+import IconCancel from "../../assets/picture/cancel/icons8-cancel-48.png";
 
 export default function NotSent() {
   const [open, setOpen] = useState(false);
@@ -46,6 +48,9 @@ export default function NotSent() {
   const [toDate, setToDate] = useState("");
   const multiPrint = useContext(ValueContext);
   const [showDetailById, setShowDetailById] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [val, setVal] = useState({});
+  const { loading, mutate } = useCancel();
 
   const sendStatus = (data) => {
     return {
@@ -57,6 +62,15 @@ export default function NotSent() {
       toDate: data.toDate,
       byDataType: "ALL",
     };
+  };
+
+  const handleCancel = (e, val) => {
+    e.preventDefault();
+    const data = {
+      INV_NO: val.INV_NO,
+      Transid: JSON.stringify(val.Transid),
+    };
+    mutate(data);
   };
 
   useLayoutEffect(() => {
@@ -86,7 +100,13 @@ export default function NotSent() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleConfirm = () => {
+    setConfirm(false);
+  };
+  const handleOpenConfirm = (e, val) => {
+    setVal(val);
+    setConfirm(true);
+  };
   const Table = () => (
     <>
       <table>
@@ -180,7 +200,6 @@ export default function NotSent() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
-                    
                   />
                 </td>
                 <td>{format(new Date(val.CDATE), "dd/MM/yyyy")}</td>
@@ -195,6 +214,27 @@ export default function NotSent() {
                     <Chip color="success" label="ສົ່ງແລ້ວ" />
                   ) : (
                     <Chip color="error" label="ຍັງບໍທັນສົ່ງ" />
+                  )}
+                </td>
+
+                <td>
+                  {val.cancel_bill === true ? (
+                    <IconButton
+                      disabled
+                      onClick={(e) => {
+                        handleOpenConfirm(e, val);
+                      }}
+                    >
+                      <Chip disabled color="warning" label="ຍົກເລີກ" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={(e) => {
+                        handleOpenConfirm(e, val);
+                      }}
+                    >
+                      <Chip color="success" label="ຍົກເລີກ" />
+                    </IconButton>
                   )}
                 </td>
                 <td>
@@ -305,6 +345,42 @@ export default function NotSent() {
               <Button onClick={multiPrint.generatePDF}>Print</Button>
               <Button onClick={handleClose}>close</Button>
             </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={confirm}
+            onClose={handleConfirm}
+            style={{ textAlign: "center" }}
+          >
+            <DialogContent>
+              <DialogContentText>
+                <span
+                  style={{
+                    display: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  {/* <CancelOutlined/> */}
+                  <img src={IconCancel}  style={{width: "33px"}}/>
+                  <h3>ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຍົກເລີກລາຍການ.?</h3>
+                </span>
+                <Button
+                  color="success"
+                  style={{ fontSize: "18px", background: "primary" }}
+                  onClick={(e) => {
+                    handleCancel(e, val);
+                  }}
+                >
+                  <Chip color="primary" label="ຍືນຍັນ"/>
+                  
+                </Button>
+                <Button style={{ fontSize: "18px" }} onClick={handleConfirm}>
+                 <Chip color="warning" label="ຍ້ອນກັບ"/>
+                </Button>
+              </DialogContentText>
+            </DialogContent>
           </Dialog>
         </Stack>
         <div>

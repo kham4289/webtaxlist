@@ -12,6 +12,8 @@ import {
 import { NumericFormat } from "react-number-format";
 import { ValueContext } from "../context/value.context";
 import Bg from "../assets/picture/BG12.png";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 // import { Pages } from "@mui/icons-material";
 // import Bg from "../assets/picture/BG.11.png";
 
@@ -45,11 +47,11 @@ export default function Details({ data }) {
       <div
         ref={multiPrint.componentPDF}
         style={{
-          orientation:"portrait",
+          orientation: "portrait",
           width: "100%",
           height: "1120px",
-            // marginBottom: "20px",
-            // marginTop: "20px",
+          // marginBottom: "20px",
+          // marginTop: "20px",
           backgroundImage: `url(${Bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -88,23 +90,79 @@ export default function Details({ data }) {
                     alignItems: "center",
                   }}
                 ></div> */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "end",
-                    alignItems: "end",
-                    paddingTop: "1px",
-                    gap: "5px",
-                  }}
-                >
-                  <span>ເລກທີ: {val.Transid}</span>
-                  {/* <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p> */}
-                  <span style={{ textAlign: "end" }}>ວັນທີ: {date}</span>
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "end",
+                  alignItems: "end",
+                  paddingTop: "1px",
+                  paddingBottom: "5px",
+                  gap: "5px",
+                }}
+              >
+                <span>ເລກທີ: {val.Transid}</span>
+                {/* <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p> */}
+                <span style={{ textAlign: "end", paddingBottom: "10px" }}>
+                  ວັນທີ: {date}
+                </span>
+              </div>
               {/* </div> */}
-              
-              <div>
+              <Box sx={{ width: "100%" }}>
+                <Grid
+                  container
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  className="detail"
+                >
+                  <Grid item xs={6}>
+                    <div>
+                      <p>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) :</p>
+                      <p style={{font: ""}}>ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</p>
+                      <p>ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ,</p>
+                      <p>ເມືອງ: ຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ</p>
+                      <p>ໂທລະສັບ: 020 77800700 </p>
+                      <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
+                      <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
+                      <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
+                    </div>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <div style={{borderRight: "1px"}}>
+                      <p>ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :</p>
+                      <p>
+                        <input
+                          onChange={handleUpdate}
+                          name="BY_FULL_NM"
+                          className="inputtax"
+                          value={
+                            updateFullName !== "" || isTyping
+                              ? updateFullName
+                              : val.BY_FULL_NM
+                          }
+                        />
+                      </p>
+                      <p>
+                        ທີ່ຕັ້ງ: ຖະໜົນ:
+                        <input autoComplete="off" className="address" />
+                        , ບ້ານ:
+                        <input autoComplete="off" className="address" />
+                        , ເມືອງ:
+                        <input autoComplete="off" className="address" />
+                        , ແຂວງ:
+                        <input autoComplete="off" className="province" />
+                      </p>
+                      <p>ໂທລະສັບ: {val.TIN}</p>
+                      <p>ເລກປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
+                      <p>ຊື່ບັນຊີທະນາຄານ:</p>
+                      <p>ເລກບັນຊີທະນາຄານ:</p>
+                      <p>ຮູບແບບການສຳລະສະສາງ:</p>
+                    </div>
+                  </Grid>
+                </Grid>
+              </Box>
+              {/* <div>
                 <h4>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
                 <p>
                   ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ: ຈັນທະບູລີ,
@@ -112,7 +170,8 @@ export default function Details({ data }) {
                 </p>
                 <p>ໂທລະສັບ: 020 77800700 </p>
                 <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
-                <p>ເລກບັນຊີບໍລິສັດ:</p>
+                <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
+                <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
                 <h4>
                   ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
                   <input
@@ -139,9 +198,13 @@ export default function Details({ data }) {
                 </p>
                 <p>ໂທລະສັບ: {val.TIN}</p>
                 <p>ເລກປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
-                <p>ເລກບັນຊີຜູ້ຊື້:</p>
-              </div>
-              <Table size="small" style={{fontSize: "14px"}}>
+                
+                <p>ຊື່ບັນຊີທະນາຄານ:</p>
+                <p>ເລກບັນຊີທະນາຄານ:</p>
+                <p>ຮູບແບບການສຳລະສະສາງ:</p>
+
+              </div> */}
+              <Table size="small" style={{ fontSize: "14px" }}>
                 <TableHead>
                   <TableRow>
                     <TableCell>ລ/ດ</TableCell>
@@ -172,7 +235,6 @@ export default function Details({ data }) {
                           displayType="text"
                           thousandSeparator=","
                           allowLeadingZeros
-                          
                         />
                       </TableCell>
                       <TableCell align="right">
@@ -223,7 +285,6 @@ export default function Details({ data }) {
                   decimalScale={2}
                   allowLeadingZeros
                   thousandSeparator=","
-                
                 />
               </h4>
               <p>ຈຳນວນເງິນທີ່ຂຽນເປັນຕົວໜັງສື: {val.amtConvert}</p>

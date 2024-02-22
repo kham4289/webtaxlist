@@ -102,14 +102,14 @@ tr:nth-child(even) {
   font-family: noto sans lao;
   font-size: 16px;
   background: none;
-  max-width: 156px;
+  max-width: 150px;
   color: #2b2c2c;
 }
 .inputtax{
   border: none;
   outline: none;
   font-family: noto sans lao;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   background: none;
   width: 70%;
@@ -132,6 +132,10 @@ tr:nth-child(even) {
   text-align: left;
   background-color: #e6f7f0;
   color: white;
+}
+
+.detail{
+  border: 1px solid;
 }
 
 

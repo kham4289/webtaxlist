@@ -19,7 +19,7 @@ import { Stack } from "@mui/system";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { getTaxMain, getSent } from "../../services/tax.services";
 import { format } from "date-fns";
-import { useState, useLayoutEffect, useContext } from "react";
+import { useState, useLayoutEffect, useContext, useEffect } from "react";
 import { Pagination } from "@mui/material";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { NumericFormat } from "react-number-format";
@@ -29,6 +29,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { ValueContext } from "../../context/value.context";
+import { useCancel } from "../../hooks/useDatafinal";
+import IconCancel from "../../assets/picture/cancel/icons8-cancel-48.png";
 // import Displays from "../../components/Displays";
 
 export default function AllTax() {
@@ -47,7 +49,10 @@ export default function AllTax() {
   const [formDate, setFormDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [showDetailById, setShowDetailById] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [val, setVal] = useState({});
   const multiPrint = useContext(ValueContext);
+  const { loading, mutate } = useCancel();
 
   const sendStatus = (data) => {
     return {
@@ -59,6 +64,16 @@ export default function AllTax() {
       byDataType: "ALL",
     };
   };
+
+  const handleCancel = (e, val) => {
+    e.preventDefault();
+    const data = {
+      INV_NO: val.INV_NO,
+      Transid: JSON.stringify(val.Transid),
+    };
+    mutate(data);
+  };
+
   useLayoutEffect(() => {
     setPage(getPageNumber);
     setTaxData([]);
@@ -69,7 +84,6 @@ export default function AllTax() {
       .then((data) => {
         setTaxData(data.dataaray);
         setTaxCount(data.rowcount);
-        console.log(data.dataaray);
       })
       .catch((err) => console.log(err));
     // }
@@ -94,6 +108,13 @@ export default function AllTax() {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleConfirm = () =>{
+    setConfirm(false)
+  }
+  const handleOpenConfirm = (e, val) =>{
+    setVal(val)
+    setConfirm(true)
+  }
   // React.useEffect(() => {
   //   setTaxData([])
 
@@ -183,7 +204,6 @@ export default function AllTax() {
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
-                    
                   />
                 </td>
                 <td>
@@ -235,6 +255,25 @@ export default function AllTax() {
                   ) : (
                     <Chip color="error" label="ຍັງບໍທັນສົ່ງ" />
                   )}
+                </td>
+                <td>
+                  {val.cancel_bill == true ? (
+                    <IconButton
+                    disabled
+                    onClick={(e) => {
+                      handleOpenConfirm(e, val);
+                    }}
+                  >
+                    <Chip disabled color="warning" label="ຍົກເລີກ" />
+                  </IconButton>
+                  ):(<IconButton
+                    onClick={(e) => {
+                      handleOpenConfirm(e, val);
+                    }}
+                  >
+                    <Chip color="success" label="ຍົກເລີກ" />
+                  </IconButton>)}
+                  
                 </td>
                 <td>
                   <Tooltip title="ເບິ່ງລາຍລະອຽດ">
@@ -345,6 +384,40 @@ export default function AllTax() {
               <Button onClick={multiPrint.generatePDF}>Print</Button>
               <Button onClick={handleClose}>close</Button>
             </DialogActions>
+          </Dialog>
+          <Dialog
+            open={confirm}
+            onClose={handleConfirm}
+            style={{ textAlign: "center" }}
+          >
+            <DialogContent>
+              <DialogContentText>
+                <span
+                  style={{
+                    display: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <img src={IconCancel}  style={{width: "33px"}}/>
+                  <h3>ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຍົກເລີກລາຍການ.?</h3>
+                </span>
+                <Button
+                  color="success"
+                  style={{ fontSize: "18px", background: "primary" }}
+                  onClick={(e) => {
+                    handleCancel(e, val);
+                  }}
+                >
+                  <Chip color="primary" label="ຍືນຍັນ"/>
+                  
+                </Button>
+                <Button style={{ fontSize: "18px" }} onClick={handleConfirm}>
+                 <Chip color="warning" label="ຍ້ອນກັບ"/>
+                </Button>
+              </DialogContentText>
+            </DialogContent>
           </Dialog>
         </Stack>
         <div>

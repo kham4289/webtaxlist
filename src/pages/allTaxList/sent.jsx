@@ -27,6 +27,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { ValueContext } from "../../context/value.context";
+import { useCancel } from "../../hooks/useDatafinal";
 
 export default function Sent() {
   const [open, setOpen] = useState(false);
@@ -46,6 +47,7 @@ export default function Sent() {
   const [toDate, setToDate] = useState("");
   const [showDetailById, setShowDetailById] = useState("");
   const multiPrint = useContext(ValueContext);
+  const { loading, mutate } = useCancel();
   const sendStatus = (data) => {
     return {
       pageNumber: data.value,
@@ -56,6 +58,14 @@ export default function Sent() {
       toDate: data.toDate,
       byDataType: "ALL",
     };
+  };
+  const handleCancel = (e, val) => {
+    e.preventDefault();
+    const data = {
+      INV_NO: val.INV_NO,
+      Transid: val.Transid,
+    };
+    mutate(data);
   };
   useLayoutEffect(() => {
     setPage(getPageNumber);
@@ -87,8 +97,8 @@ export default function Sent() {
         <thead>
           <tr>
             <th>Taxpayer ID</th>
-            <th>Invoice</th> 
-            <th>Buyer</th> 
+            <th>Invoice</th>
+            <th>Buyer</th>
             <th>Count of Dertail Lists</th>
             <th>Total Sale Amount Before Tax</th>
             <th>Service Fee</th>
@@ -188,6 +198,27 @@ export default function Sent() {
                     <Chip color="success" label="ສົ່ງແລ້ວ" />
                   ) : (
                     <Chip color="error" label="ຍັງບໍທັນສົ່ງ" />
+                  )}
+                </td>
+
+                <td>
+                  {val.cancel_bill === true ? (
+                    <IconButton
+                      disabled
+                      onClick={(e) => {
+                        handleCancel(e, val);
+                      }}
+                    >
+                      <Chip disabled color="warning" label="ຍົກເລີກ" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={(e) => {
+                        handleCancel(e, val);
+                      }}
+                    >
+                      <Chip color="success" label="ຍົກເລີກ" />
+                    </IconButton>
                   )}
                 </td>
                 <td>
