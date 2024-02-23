@@ -10,6 +10,7 @@ export const route = {
   NOT_TAX_LIST:"/notSent",
   SENT_TAX_LIST: "/Sent",
   DETAIL_TAX_LIST:"/Detail",
+  CANCEL_LIST: "/Cancel",
   GETBY_SUN:"/Sun",
   GETBY_BILLING: "/Billing",
   GETBY_MANUAL: "/Manual",

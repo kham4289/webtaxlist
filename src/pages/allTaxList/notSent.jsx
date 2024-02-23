@@ -61,6 +61,7 @@ export default function NotSent() {
       fromDate: data.formDate,
       toDate: data.toDate,
       byDataType: "ALL",
+      cancelBill: "0",
     };
   };
 
@@ -363,9 +364,12 @@ export default function NotSent() {
                   }}
                 >
                   {/* <CancelOutlined/> */}
-                  <img src={IconCancel}  style={{width: "33px"}}/>
-                  <h3>ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຍົກເລີກລາຍການ.?</h3>
+                  <img src={IconCancel} style={{ width: "33px" }} />
+                  <h3>ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຍົກເລີກ.?</h3>
                 </span>
+                <Button style={{ fontSize: "18px" }} onClick={handleConfirm}>
+                  <Chip color="warning" label="ຍ້ອນກັບ" />
+                </Button>
                 <Button
                   color="success"
                   style={{ fontSize: "18px", background: "primary" }}
@@ -373,11 +377,7 @@ export default function NotSent() {
                     handleCancel(e, val);
                   }}
                 >
-                  <Chip color="primary" label="ຍືນຍັນ"/>
-                  
-                </Button>
-                <Button style={{ fontSize: "18px" }} onClick={handleConfirm}>
-                 <Chip color="warning" label="ຍ້ອນກັບ"/>
+                  <Chip color="primary" label="ຍືນຍັນ" />
                 </Button>
               </DialogContentText>
             </DialogContent>

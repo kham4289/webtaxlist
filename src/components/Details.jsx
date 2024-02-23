@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getDetail } from "../services/tax.services";
-
 import {
   Table,
   TableBody,
@@ -14,8 +13,6 @@ import { ValueContext } from "../context/value.context";
 import Bg from "../assets/picture/BG12.png";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-// import { Pages } from "@mui/icons-material";
-// import Bg from "../assets/picture/BG.11.png";
 
 export default function Details({ data }) {
   const [taxData, setTaxData] = useState([]);
@@ -50,13 +47,10 @@ export default function Details({ data }) {
           orientation: "portrait",
           width: "100%",
           height: "1120px",
-          // marginBottom: "20px",
-          // marginTop: "20px",
           backgroundImage: `url(${Bg})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           marginBottom: 10,
-          // pageBreakBefore: "always"
         }}
       >
         {taxData.map((val, index) => {
@@ -73,23 +67,6 @@ export default function Details({ data }) {
               <h2 style={{ textAlign: "center", paddingTop: "16px" }}>
                 ໃບຮັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE
               </h2>
-              {/* <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr",
-                  width: "100%",
-                  marginBottom: 20,
-                }}
-              >
-                <div></div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                ></div> */}
               <div
                 style={{
                   display: "flex",
@@ -102,12 +79,10 @@ export default function Details({ data }) {
                 }}
               >
                 <span>ເລກທີ: {val.Transid}</span>
-                {/* <p> ເອກະສານອ້າງອີງ: {val.INV_NO} </p> */}
                 <span style={{ textAlign: "end", paddingBottom: "10px" }}>
                   ວັນທີ: {date}
                 </span>
               </div>
-              {/* </div> */}
               <Box sx={{ width: "100%" }}>
                 <Grid
                   container
@@ -116,33 +91,31 @@ export default function Details({ data }) {
                   className="detail"
                 >
                   <Grid item xs={6}>
-                    <div>
-                      <p>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) :</p>
-                      <p style={{font: ""}}>ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</p>
-                      <p>ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ,</p>
-                      <p>ເມືອງ: ຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ</p>
-                      <p>ໂທລະສັບ: 020 77800700 </p>
-                      <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
-                      <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
-                      <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
-                    </div>
+                    <p>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) :</p>
+                    <p style={{ fontWeight: "bold" }}>
+                      ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ
+                    </p>
+                    <p>ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ,</p>
+                    <p>ເມືອງ: ຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ</p>
+                    <p>ໂທລະສັບ: 020 77800700 </p>
+                    <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
+                    <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
+                    <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
                   </Grid>
 
                   <Grid item xs={6}>
-                    <div style={{borderRight: "1px"}}>
+                    <div style={{ borderRight: "1px" }}>
                       <p>ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :</p>
-                      <p>
-                        <input
-                          onChange={handleUpdate}
-                          name="BY_FULL_NM"
-                          className="inputtax"
-                          value={
-                            updateFullName !== "" || isTyping
-                              ? updateFullName
-                              : val.BY_FULL_NM
-                          }
-                        />
-                      </p>
+                      <input
+                        onChange={handleUpdate}
+                        name="BY_FULL_NM"
+                        className="inputtax"
+                        value={
+                          updateFullName !== "" || isTyping
+                            ? updateFullName
+                            : val.BY_FULL_NM
+                        }
+                      />
                       <p>
                         ທີ່ຕັ້ງ: ຖະໜົນ:
                         <input autoComplete="off" className="address" />
@@ -162,48 +135,7 @@ export default function Details({ data }) {
                   </Grid>
                 </Grid>
               </Box>
-              {/* <div>
-                <h4>ຊື່ວິສະຫະກິດ ( ຜູ້ຂາຍ ) ທີພລັດ ດີຈີຕອນ ຈຳກັດຜູ້ດຽວ</h4>
-                <p>
-                  ທີ່ຕັ້ງ: ຖະໜົນ ສາຍລົມ, ບ້ານ: ສາຍລົມ, ເມືອງ: ຈັນທະບູລີ,
-                  ນະຄອນຫຼວງວຽງຈັນ
-                </p>
-                <p>ໂທລະສັບ: 020 77800700 </p>
-                <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
-                <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
-                <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
-                <h4>
-                  ຊື່ວິສາຫະກິດ( ຜູ້ຊື້ ) :
-                  <input
-                    onChange={handleUpdate}
-                    name="BY_FULL_NM"
-                    autoComplete="off"
-                    className="inputtax"
-                    value={
-                      updateFullName !== "" || isTyping
-                        ? updateFullName
-                        : val.BY_FULL_NM
-                    }
-                  />
-                </h4>
-                <p className="flex">
-                  ທີ່ຕັ້ງ: ຖະໜົນ:
-                  <input autoComplete="off" className="address" />
-                  , ບ້ານ:
-                  <input autoComplete="off" className="address" />
-                  , ເມືອງ:
-                  <input autoComplete="off" className="address" />
-                  , ແຂວງ:
-                  <input autoComplete="off" className="province" />
-                </p>
-                <p>ໂທລະສັບ: {val.TIN}</p>
-                <p>ເລກປະຈຳຕົວຜູ້ຊື້: {val.BY_TIN}</p>
-                
-                <p>ຊື່ບັນຊີທະນາຄານ:</p>
-                <p>ເລກບັນຊີທະນາຄານ:</p>
-                <p>ຮູບແບບການສຳລະສະສາງ:</p>
-
-              </div> */}
+             
               <Table size="small" style={{ fontSize: "14px" }}>
                 <TableHead>
                   <TableRow>
@@ -274,7 +206,6 @@ export default function Details({ data }) {
                   allowLeadingZeros
                   thousandSeparator=","
                 />
-                {/* {val.VAT_AMT} */}
               </p>
               <h4 style={{ textAlign: "end" }}>
                 ລວມມູນຄ່າທັງໝົດ : {""}

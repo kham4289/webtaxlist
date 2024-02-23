@@ -11,7 +11,7 @@ import AllTax from "./pages/allTaxList";
 import NotSent from "./pages/allTaxList/notSent";
 import Sent from "./pages/allTaxList/sent";
 import Detail from "./components/Detail";
-import GetByBulling from "./pages/allTaxList/GetByBulling";
+import Cancel from "./pages/allTaxList/Cancel";
 import GetByManual from "./pages/allTaxList/GetByManual";
 import GetBysun from "./pages/allTaxList/getBysun";
 
@@ -27,7 +27,7 @@ function App() {
             <Route path={`${route.NOT_TAX_LIST}`} element={<NotSent />}/>
             <Route path={`${route.SENT_TAX_LIST}`} element={<Sent />}/>
             <Route path={`${route.DETAIL_TAX_LIST}/:searchTransid`} element={<Detail />}/>
-            <Route path={`${route.GETBY_BILLING}`} element={<GetByBulling/>} />
+            <Route path={`${route.CANCEL_LIST}`} element={<Cancel/>} />
             <Route path={`${route.GETBY_MANUAL}`} element={<GetByManual/>} />
             <Route path={`${route.GETBY_SUN}`} element={<GetBysun/>} />
           </Route>

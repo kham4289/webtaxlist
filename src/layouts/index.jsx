@@ -129,6 +129,15 @@ export default function TopBar() {
                   >
                     ລາຍການທີ່ສົ່ງແລ້ວ
                   </MenuItem>
+                  <MenuItem
+                    onClick={(e) => {
+                      handleClose();
+                      setValue(Value);
+                      navigate(`${route.CANCEL_LIST}?page=${Value}`);
+                    }}
+                  >
+                    ລາຍການທີ່ຍົກເລີກ
+                  </MenuItem>
                 </Menu>
               </Box>
 

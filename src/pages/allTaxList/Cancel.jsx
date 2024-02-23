@@ -1,26 +1,46 @@
-import { Chip, Divider, IconButton, TextField, Tooltip } from "@mui/material";
-import Detail from "../../components/Detail";
+import {
+  Chip,
+  Divider,
+  IconButton,
+  TextField,
+  Tooltip,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
+
+import {} from "@mui/material";
+import Details from "../../components/Details";
+// import Detail from "../../components/Detail";
 import * as React from "react";
 import { Stack } from "@mui/system";
-
 import { useSearchParams, useLocation } from "react-router-dom";
 import { getTaxMain, getSent } from "../../services/tax.services";
 import { format } from "date-fns";
-import { useState } from "react";
-import Pagination from "@mui/material/Pagination";
+import { useState, useLayoutEffect, useContext, useEffect } from "react";
+import { Pagination } from "@mui/material";
 import { useNavigate, createSearchParams } from "react-router-dom";
-import { useLayoutEffect } from "react";
 import { NumericFormat } from "react-number-format";
 import { DatePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { ValueContext } from "../../context/value.context";
+import { useCancel } from "../../hooks/useDatafinal";
+import IconCancel from "../../assets/picture/cancel/icons8-cancel-48.png";
+// import Displays from "../../components/Displays";
 
-export default function GetByBulling() {
+export default function Cancel() {
+  const [open, setOpen] = useState(false);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [maxWidth, setMaxWidth] = React.useState("md");
   const navigate = useNavigate();
   const filter = useLocation();
   const [page, setPage] = useState(1);
-
+  const nodeRef = React.useRef(null);
   const [taxData, setTaxData] = React.useState([]);
   const [searchParams] = useSearchParams();
   const getPageNumber = Number(searchParams.get("page" || 1));
@@ -28,6 +48,11 @@ export default function GetByBulling() {
   const [searchData, setSearchData] = useState("");
   const [formDate, setFormDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [showDetailById, setShowDetailById] = useState("");
+  const [confirm, setConfirm] = useState(false);
+  const [val, setVal] = useState({});
+  const multiPrint = useContext(ValueContext);
+  const { loading, mutate } = useCancel();
 
   const sendStatus = (data) => {
     return {
@@ -36,40 +61,101 @@ export default function GetByBulling() {
       searchInvNo: data.searchData,
       fromDate: data.formDate,
       toDate: data.toDate,
-      byDataType: "Billing",
+      byDataType: "ALL",
+      cancelBill: "1",
     };
   };
+
+  const handleCancel = (e, val) => {
+    e.preventDefault();
+    const data = {
+      INV_NO: val.INV_NO,
+      Transid: JSON.stringify(val.Transid),
+    };
+    mutate(data);
+  };
+
   useLayoutEffect(() => {
     setPage(getPageNumber);
     setTaxData([]);
-
-    getSent(
-      sendStatus({
-        status: 1,
-        value: getPageNumber,
-        searchData,
-        formDate,
-        toDate,
-      })
+    // if (filter.pathname.split("/")[2] == "allTax") {
+    getTaxMain(
+      sendStatus({ value: getPageNumber, searchData, formDate, toDate })
     )
       .then((data) => {
         setTaxData(data.dataaray);
         setTaxCount(data.rowcount);
       })
       .catch((err) => console.log(err));
+    // }
+    // if (filter.pathname.split("/")[2] == "notSend") {
+    //   getSent(sendStatus(0))
+    //     .then((data) => {
+    //       setTaxData(data.dataaray);
+    //       setTaxCount(data.rowcount);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
+    // if (filter.pathname.split("/")[2] == "sent") {
+    //   getSent(sendStatus(1))
+    //     .then((data) => {
+    //       setTaxData(data.dataaray);
+    //       setTaxCount(data.rowcount);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
   }, [getPageNumber, setPage, searchData, formDate, toDate]);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleConfirm = () => {
+    setConfirm(false);
+  };
+  const handleOpenConfirm = (e, val) => {
+    setVal(val);
+    setConfirm(true);
+  };
+  // React.useEffect(() => {
+  //   setTaxData([])
+
+  //   if(filter.pathname.split('/')[2] == 'all' ){
+  //     getTaxMain(sendStatus())
+  //       .then((data) => {
+  //         setTaxData(data.dataaray);
+  //         setTaxCount(data.rowcount);
+  //         console.log(taxCount);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  //   if (filter.pathname.split("/")[2] == "notSend") {
+  //     getSent(sendStatus(0))
+  //       .then((data) => {
+  //         setTaxData(data.dataaray);
+  //         setTaxCount(data.rowcount);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  //   if (filter.pathname.split("/")[2] == "sent") {
+  //     getSent(sendStatus(1))
+  //       .then((data) => {
+  //         setTaxData(data.dataaray);
+  //         setTaxCount(data.rowcount);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [Value]);
+
+  // const [params] = useSearchParams();
 
   const Table = () => (
     <>
       <table>
         <thead>
           <tr>
-            {/* <th>id</th> */}
             <th>Taxpayer ID</th>
-            <th>Invoice</th> {/** invoice id and date in the same column */}
-            {/* <th>INV_DD</th> */}
-            <th>Buyer</th> {/**buyer tin and name in the same column */}
-            {/* <th>BY_FULL_NM</th> */}
+            <th>Invoice</th>
+            <th>Buyer</th>
             <th>Count of Dertail Lists</th>
             <th>Total Sale Amount Before Tax</th>
             <th>Service Fee</th>
@@ -87,18 +173,15 @@ export default function GetByBulling() {
           {taxData.map((val, index) => {
             return (
               <tr key={index}>
-                {/* <td>{val.Transid}</td> */}
                 <td>{val.TIN}</td>
                 <td>
                   <p>{val.INV_NO}</p>
-                  {/* <p>{val.INV_DD}</p> */}
                 </td>
                 <td>
                   <p>{val.BY_TIN}</p>
                   <p>{val.BY_FULL_NM}</p>
                 </td>
                 <td>
-                  {/* {val.SALE_CNT} */}
                   <NumericFormat
                     value={val.SALE_CNT}
                     displayType="text"
@@ -107,16 +190,16 @@ export default function GetByBulling() {
                   />
                 </td>
                 <td>
-                  {/* {val.SUPL_AMT} */}
                   <NumericFormat
                     value={val.SUPL_AMT}
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
-                  {/* {val.SVC_FEE} */}
                   <NumericFormat
                     value={val.SVC_FEE}
                     displayType="text"
@@ -125,7 +208,6 @@ export default function GetByBulling() {
                   />
                 </td>
                 <td>
-                  {/* {val.EXCISE_AMT} */}
                   <NumericFormat
                     value={val.EXCISE_AMT}
                     displayType="text"
@@ -134,25 +216,26 @@ export default function GetByBulling() {
                   />
                 </td>
                 <td>
-                  {/* {val.VAT_AMT} */}
                   <NumericFormat
                     value={val.VAT_AMT}
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
-                  {/* {val.SALE_AMT} */}
                   <NumericFormat
                     value={val.SALE_AMT}
                     displayType="text"
                     allowNegative
                     thousandSeparator=","
+                    decimalScale={2}
+                    fixedDecimalScale={true}
                   />
                 </td>
                 <td>
-                  {/* {val.DISC_AMT} */}
                   <NumericFormat
                     value={val.DISC_AMT}
                     displayType="text"
@@ -175,9 +258,34 @@ export default function GetByBulling() {
                   )}
                 </td>
                 <td>
+                  {val.cancel_bill == true ? (
+                    <IconButton
+                      disabled
+                      onClick={(e) => {
+                        handleOpenConfirm(e, val);
+                      }}
+                    >
+                      <Chip disabled color="warning" label="ຍົກເລີກ" />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={(e) => {
+                        handleOpenConfirm(e, val);
+                      }}
+                    >
+                      <Chip color="success" label="ຍົກເລີກ" />
+                    </IconButton>
+                  )}
+                </td>
+                <td>
                   <Tooltip title="ເບິ່ງລາຍລະອຽດ">
-                    <IconButton>
-                      <Detail data={val.INV_NO} />
+                    <IconButton
+                      onClick={() => {
+                        setShowDetailById(val.INV_NO);
+                        setOpen(true);
+                      }}
+                    >
+                      <RemoveRedEyeIcon />
                     </IconButton>
                   </Tooltip>
                 </td>
@@ -185,7 +293,6 @@ export default function GetByBulling() {
             );
           })}
         </tbody>
-        <tfoot></tfoot>
       </table>
       <Pagination
         style={{ width: "100%" }}
@@ -208,7 +315,7 @@ export default function GetByBulling() {
     <div className="box">
       <Stack direction={"column"} spacing={2}>
         <h2 style={{ textAlign: "center", paddingBottom: 15 }}>
-          ສະແດງລາຍການ Billing
+          ສະແດງລາຍການທັງຫມົດ TAX
         </h2>
         <Stack direction="row" justifyContent={"space-around"}>
           <Stack direction="row" spacing={2}>
@@ -245,8 +352,10 @@ export default function GetByBulling() {
               </DemoContainer>
             </LocalizationProvider>
           </Stack>
+
           <Stack direction="row" paddingTop="8px" spacing={2}>
             <TextField
+              size="small"
               onChange={(e) => {
                 setSearchData(e.target.value);
                 navigate({
@@ -256,15 +365,67 @@ export default function GetByBulling() {
                   })}`,
                 });
               }}
-              size="small"
               label="ຄົນຫາ...! ເລກອິນວອຍ"
             />
           </Stack>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            fullWidth={fullWidth}
+            maxWidth={maxWidth}
+          >
+            <div style={{ width: "100%", height: "100%" }}>
+              <DialogContent>
+                <DialogContentText>
+                  <Details data={showDetailById} />
+                </DialogContentText>
+              </DialogContent>
+            </div>
+
+            <DialogActions>
+              <Button onClick={multiPrint.generatePDF}>Print</Button>
+              <Button onClick={handleClose}>close</Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={confirm}
+            onClose={handleConfirm}
+            style={{ textAlign: "center" }}
+          >
+            <DialogContent>
+              <DialogContentText>
+                <span
+                  style={{
+                    display: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    gap: "1px",
+                  }}
+                >
+                  <img src={IconCancel} style={{ width: "33px" }} />
+                  <h3>ທ່ານແນ່ໃຈແລ້ວບໍ່ວ່າຕ້ອງການຍົກເລີກ.?</h3>
+                </span>
+                <Button style={{ fontSize: "18px" }} onClick={handleConfirm}>
+                  <Chip color="warning" label="ຍ້ອນກັບ" />
+                </Button>
+                <Button
+                  color="success"
+                  style={{ fontSize: "18px", background: "primary" }}
+                  onClick={(e) => {
+                    handleCancel(e, val);
+                  }}
+                >
+                  <Chip color="primary" label="ຍືນຍັນ" />
+                </Button>
+              </DialogContentText>
+            </DialogContent>
+          </Dialog>
         </Stack>
         <div>
           <Divider />
         </div>
-        <Table />
+
+        <Table nodeRef={nodeRef} />
       </Stack>
     </div>
   );
