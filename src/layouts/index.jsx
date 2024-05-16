@@ -146,7 +146,7 @@ export default function TopBar() {
                     navigate(`${route.GET_CBS}`);
                   }}
                 >
-                  CBS
+                  ບີນ Postpaid
                 </Button>
               </Box>
 

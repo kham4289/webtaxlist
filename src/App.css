@@ -13,7 +13,7 @@
 
 /* Style the header */
 .container {
-  margin: 2rem;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   /* grid-template-columns: 2frbo; */

@@ -13,3 +13,13 @@ export const api = axios.create({
     "Content-type": "application/json",
   },
 });
+
+export const apipdf = axios.create({
+  baseURL: import.meta.env.VITE_ENDPOINTPDF,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
+
+
+
