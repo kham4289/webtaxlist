@@ -139,6 +139,15 @@ export default function TopBar() {
                     ລາຍການທີ່ຍົກເລີກ
                   </MenuItem>
                 </Menu>
+                <Button
+                  color="inherit"
+                  sx={{ ...btn }}
+                  onClick={() => {
+                    navigate(`${route.GET_CBS}`);
+                  }}
+                >
+                  ບີນ Postpaid
+                </Button>
               </Box>
 
               {/* <Button color="inherit">Login</Button> */}

@@ -7,4 +7,10 @@ export const instance = axios.create({
     }
   
   });
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_ENDPOINT1,
+  headers: {
+    "Content-type": "application/json",
+  },
+});
 

@@ -1,5 +1,5 @@
 
-import { instance } from "../api_config";
+import { instance, api } from "../api_config";
 
 export const getTaxMain = async (data) => {
   try {
@@ -36,4 +36,12 @@ export const getDetail = async (data) => {
     return null;
   }
 };
+export const getCBS = async (data) => {
+  try {
+    let res = await api.post("/customerID", data);
 
+    return { cbsDetail: res.data.detail };
+  } catch (err) {
+    return null;
+  }
+};

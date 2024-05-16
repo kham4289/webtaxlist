@@ -14,6 +14,7 @@ export const route = {
   GETBY_SUN:"/Sun",
   GETBY_BILLING: "/Billing",
   GETBY_MANUAL: "/Manual",
+  GET_CBS: "/cbs",
 
 
  
