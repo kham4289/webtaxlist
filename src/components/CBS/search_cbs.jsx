@@ -67,8 +67,8 @@ export default function search_cbs() {
         />
         {fileUrl ? (
           <div>
-            <a href={fileUrl} target="_blank" rel="nopener">
-              Open PDF File
+            <a href={`http://172.28.14.225:2024/tplus-service/update-pdf/BILL_202404/202404_REL_BILL/202404_REL_BILL/202404_${phone.CustomerID}_Detail.pdf`} target="_blank" rel="nopener">
+              Open PDFFile Detail
             </a>
           </div>
         ) : (
