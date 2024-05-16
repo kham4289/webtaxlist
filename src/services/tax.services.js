@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import { instance, api } from "../api_config";
+=======
+import { api, instance } from "../api_config";
+>>>>>>> 29073a68d5dac822b77b0c0af3b7c29c9fe999a1
 
 export const getTaxMain = async (data) => {
   try {
@@ -40,7 +44,15 @@ export const getCBS = async (data) => {
   try {
     let res = await api.post("/customerID", data);
 
+<<<<<<< HEAD
     return { cbsDetail: res.data.detail };
+=======
+export const getCBS = async (data) => {
+  try {
+    let res = await api.post("/customerID", data);
+
+    return {cbsDetail: res.data.detail};
+>>>>>>> 29073a68d5dac822b77b0c0af3b7c29c9fe999a1
   } catch (err) {
     return null;
   }

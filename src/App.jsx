@@ -14,7 +14,11 @@ import Detail from "./components/Detail";
 import Cancel from "./pages/allTaxList/Cancel";
 import GetByManual from "./pages/allTaxList/GetByManual";
 import GetBysun from "./pages/allTaxList/getBysun";
+<<<<<<< HEAD
 import Get_cbs from "./pages/CBS/get_cbs"
+=======
+import Get_cbs from "./pages/CBS/get_cbs";
+>>>>>>> 29073a68d5dac822b77b0c0af3b7c29c9fe999a1
 
 function App() {
   return (

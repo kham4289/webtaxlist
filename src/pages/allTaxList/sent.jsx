@@ -48,6 +48,7 @@ export default function Sent() {
   const [showDetailById, setShowDetailById] = useState("");
   const multiPrint = useContext(ValueContext);
   const { loading, mutate } = useCancel();
+
   const sendStatus = (data) => {
     return {
       pageNumber: data.value,
