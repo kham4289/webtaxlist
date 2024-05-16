@@ -14,6 +14,7 @@ import Detail from "./components/Detail";
 import Cancel from "./pages/allTaxList/Cancel";
 import GetByManual from "./pages/allTaxList/GetByManual";
 import GetBysun from "./pages/allTaxList/getBysun";
+import Get_cbs from "./pages/CBS/get_cbs";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path={`${route.CANCEL_LIST}`} element={<Cancel/>} />
             <Route path={`${route.GETBY_MANUAL}`} element={<GetByManual/>} />
             <Route path={`${route.GETBY_SUN}`} element={<GetBysun/>} />
+            <Route path={`${route.GET_CBS}`} element={<Get_cbs/>} />
           </Route>
         </Routes>
       </BrowserRouter>
