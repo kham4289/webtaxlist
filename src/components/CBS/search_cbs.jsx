@@ -4,14 +4,13 @@ import { getCBS } from "../../services/tax.services";
 import Nodata from "../../assets/picture/Nodatas.png";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import format from "date-fns/format";
+import { format } from "date-fns";
 
 export default function search_cbs() {
   const [phone, setPhone] = useState({});
   const [searchPhone, setSearchPhone] = useState("");
-  const [monthYear, setMonthYear] = useState("");
+  const [monthYear, setMonthYear] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
-
   const formateDate = monthYear ? format(monthYear, "yyyyMM") : "";
   const handleMonthYear = (value) => {
     setMonthYear(value);
@@ -67,11 +66,10 @@ export default function search_cbs() {
       >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
-          slotProps={{textField: {size: 'small'}}}
+            slotProps={{ textField: { size: "small" } }}
             views={["month", "year"]}
             value={monthYear}
             onChange={handleMonthYear}
-            renderInput={(params) => <TextField{...params}/>}
           />
         </LocalizationProvider>
         <TextField
@@ -93,7 +91,7 @@ export default function search_cbs() {
             </a>
           </div>
         ) : (
-          <div>no data</div>
+          <div>No data</div>
         )}
       </Stack>
 
