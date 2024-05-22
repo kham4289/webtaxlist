@@ -2,11 +2,20 @@ import { Stack, TextField } from "@mui/material";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { getCBS } from "../../services/tax.services";
 import Nodata from "../../assets/picture/Nodatas.png";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import format from "date-fns/format";
 
 export default function search_cbs() {
   const [phone, setPhone] = useState({});
   const [searchPhone, setSearchPhone] = useState("");
+  const [monthYear, setMonthYear] = useState("");
   const [fileUrl, setFileUrl] = useState(null);
+
+  const formateDate = monthYear ? format(monthYear, "yyyyMM") : "";
+  const handleMonthYear = (value) => {
+    setMonthYear(value);
+  };
   const searchCBS = (data) => {
     return {
       Msisdn: data.searchPhone,
@@ -26,7 +35,7 @@ export default function search_cbs() {
     const OponPDF = async () => {
       try {
         const response = await fetch(
-          `http://172.28.14.225:2024/tplus-service/update-pdf/BILL_202404/202404_REL_BILL/202404_REL_BILL/202404_${phone.CustomerID}.pdf`,
+          `http://172.28.14.225:2024/tplus-service/update-pdf/BILL_${formateDate}/${formateDate}_REL_BILL/${formateDate}_${phone.CustomerID}.pdf`,
           {
             method: "GET",
             headers: {
@@ -47,7 +56,6 @@ export default function search_cbs() {
     };
     OponPDF();
   });
-
   return (
     <>
       <Stack
@@ -57,6 +65,15 @@ export default function search_cbs() {
         gap="10px"
         alignItems="center"
       >
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+          slotProps={{textField: {size: 'small'}}}
+            views={["month", "year"]}
+            value={monthYear}
+            onChange={handleMonthYear}
+            renderInput={(params) => <TextField{...params}/>}
+          />
+        </LocalizationProvider>
         <TextField
           type="number"
           onChange={(e) => {
@@ -67,7 +84,11 @@ export default function search_cbs() {
         />
         {fileUrl ? (
           <div>
-            <a href={`http://172.28.14.225:2024/tplus-service/update-pdf/BILL_202404/202404_REL_BILL/202404_REL_BILL/202404_${phone.CustomerID}_Detail.pdf`} target="_blank" rel="nopener">
+            <a
+              href={`http://172.28.14.225:2024/tplus-service/update-pdf/BILL_${formateDate}/${formateDate}_REL_BILL/${formateDate}_${phone.CustomerID}_Detail.pdf`}
+              target="_blank"
+              rel="nopener"
+            >
               Open PDFFile Detail
             </a>
           </div>
@@ -75,6 +96,7 @@ export default function search_cbs() {
           <div>no data</div>
         )}
       </Stack>
+
       <Stack>
         <div>
           {fileUrl ? (
@@ -82,7 +104,7 @@ export default function search_cbs() {
               title="postpaid"
               width="100%"
               height="600px"
-              src={`http://172.28.14.225:2024/tplus-service/update-pdf/BILL_202404/202404_REL_BILL/202404_REL_BILL/202404_${phone.CustomerID}.pdf`}
+              src={`http://172.28.14.225:2024/tplus-service/update-pdf/BILL_${formateDate}/${formateDate}_REL_BILL/${formateDate}_${phone.CustomerID}.pdf`}
             />
           ) : (
             <div
