@@ -65,7 +65,7 @@ export default function Details({ data }) {
               }}
             >
               <h2 style={{ textAlign: "center", paddingTop: "16px" }}>
-                ໃບຮັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE
+                ໃບເກັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE
               </h2>
               <div
                 style={{
