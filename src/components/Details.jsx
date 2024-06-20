@@ -99,8 +99,8 @@ export default function Details({ data }) {
                     <p>ເມືອງ: ຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ</p>
                     <p>ໂທລະສັບ: 020 77800700 </p>
                     <span>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ: 556102964-900 </span>
-                    <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD</p>
-                    <p>ເລກບັນຊີທະນາຄານ: 010110000064298001</p>
+                    <p>ຊື່ບັນຊີທະນາຄານ: TPLUS DIGITAL SOLE CO.,LTD_OTHERS BRANCH</p>
+                    <p>ເລກບັນຊີທະນາຄານ: 010110000387946001</p>
                   </Grid>
 
                   <Grid item xs={6}>
@@ -197,9 +197,20 @@ export default function Details({ data }) {
                 />
               </p>
               <p style={{ textAlign: "end" }}>
-                ອັດຕາ ອ.ມ.ພ: 7% ເປັນຈຳນວນເງິນ : {""}
+                ອັດຕາ ອ.ມ.ພ: 10% ເປັນຈຳນວນເງິນ : {""}
                 <NumericFormat
                   value={val.VAT_AMT}
+                  suffix={" ກີບ"}
+                  displayType={"text"}
+                  decimalScale={2}
+                  allowLeadingZeros
+                  thousandSeparator=","
+                />
+              </p>
+              <p style={{ textAlign: "end" }}>
+                ຄ່າຮັກສາຄວາມປອດໄພ: {""}
+                <NumericFormat
+                  value="3000"
                   suffix={" ກີບ"}
                   displayType={"text"}
                   decimalScale={2}
