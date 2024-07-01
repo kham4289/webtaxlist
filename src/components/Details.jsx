@@ -184,7 +184,7 @@ export default function Details({ data }) {
                   );
                 })}
               </Table>
-
+              
               <p style={{ textAlign: "end" }}>
                 ລວມມູນຄ່າຂາຍບໍ່ມີອາກອນ : {""}
                 <NumericFormat
@@ -207,10 +207,11 @@ export default function Details({ data }) {
                   thousandSeparator=","
                 />
               </p>
-              <p style={{ textAlign: "end" }}>
+              
+                <p style={{ textAlign: "end" }}>
                 ຄ່າຮັກສາຄວາມປອດໄພ: {""}
                 <NumericFormat
-                  value="3000"
+                  value={val.SecurityFee}
                   suffix={" ກີບ"}
                   displayType={"text"}
                   decimalScale={2}
@@ -218,6 +219,7 @@ export default function Details({ data }) {
                   thousandSeparator=","
                 />
               </p>
+              
               <h4 style={{ textAlign: "end" }}>
                 ລວມມູນຄ່າທັງໝົດ : {""}
                 <NumericFormat
