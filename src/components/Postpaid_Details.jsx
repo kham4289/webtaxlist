@@ -14,7 +14,7 @@ import Bg from "../assets/picture/BG12.png";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-export default function Details({ data }) {
+export default function Postpaid_Details({ data }) {
   const [taxData, setTaxData] = useState([]);
   const [updateFullName, setUpdateFullName] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -64,7 +64,7 @@ export default function Details({ data }) {
                 fontSize: "14px",
               }}
             >
-              <h2 style={{ textAlign: "center", paddingTop: "16px" }}>
+              <h2 style={{ textAlign: "center", paddingTop: "10px" }}>
                 ໃບເກັບເງິນອາກອນມູນຄ່າເພີ່ມ/TAX INVOICE
               </h2>
               <div
@@ -142,35 +142,35 @@ export default function Details({ data }) {
                   <TableRow>
                     <TableCell>ລ/ດ</TableCell>
                     <TableCell>ເນື້ອໃນລາຍການ</TableCell>
-                    <TableCell align="right">ຫົວໜ່ວຍ</TableCell>
+                    {/* <TableCell align="right">ຫົວໜ່ວຍ</TableCell> */}
                     <TableCell align="right">ຈຳນວນ</TableCell>
                     <TableCell align="right">ລາຄາຫົວໜ່ວຍ</TableCell>
                     <TableCell align="right">ລວມເປັນເງິນ</TableCell>
                   </TableRow>
                 </TableHead>
-                {val.list.map((item, index) => {
-                  return (
-                    <TableBody key={index}>
+                {/* {val.list.map((item, index) => {
+                  return ( */}
+                    {/* <TableBody key={index}>
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell>{item.HS_NM}</TableCell>
-                      <TableCell align="center">{item.UNIT_SALE}</TableCell>
-                      <TableCell align="center">
+                      <TableCell>{item.HS_NM}</TableCell> */}
+                      {/* <TableCell align="center">{item.UNIT_SALE}</TableCell> */}
+                      {/* <TableCell align="center">
                         <NumericFormat
                           value={item.SALE_CNT}
                           displayType="text"
                           thousandSeparator=","
                           allowLeadingZeros
-                        />
-                      </TableCell>
-                      <TableCell align="right">
+                        /> */}
+                      {/* </TableCell> */}
+                      {/* <TableCell align="right">
                         <NumericFormat
                           value={item.UNIT_SALE_AMT}
                           displayType="text"
                           thousandSeparator=","
                           allowLeadingZeros
                         />
-                      </TableCell>
-                      <TableCell align="right">
+                      </TableCell> */}
+                      {/* <TableCell align="right">
                         <NumericFormat
                           value={item.SUPL_AMT}
                           suffix={" ກີບ"}
@@ -180,10 +180,46 @@ export default function Details({ data }) {
                           decimalScale={2}
                           fixedDecimalScale={true}
                         />
+                      </TableCell> */}
+                    {/* </TableBody> */}
+                {/* //   );
+                // })} */}
+
+                
+               
+                    <TableBody >
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>ຄ່າເຊົ່າບໍລີການ Monthly Fee:</TableCell>
+                      {/* <TableCell align="center">{item.UNIT_SALE}</TableCell> */}
+                      <TableCell align="center">
+                        <NumericFormat
+                          value="2"
+                          displayType="text"
+                          thousandSeparator=","
+                          allowLeadingZeros
+                        />
                       </TableCell>
+                      <TableCell align="right">
+                        <NumericFormat
+                          value="9"
+                          displayType="text"
+                          thousandSeparator=","
+                          allowLeadingZeros
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <NumericFormat
+                          value="899"
+                          suffix={" ກີບ"}
+                          displayType="text"
+                          thousandSeparator=","
+                          allowLeadingZeros
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </TableCell>
+                      
                     </TableBody>
-                  );
-                })}
               </Table>
               
               <p className="line-spacing" style={{ textAlign: "end" }}>
@@ -241,8 +277,8 @@ export default function Details({ data }) {
                   alignItems: "flex-end",
                 }}
               >
-                <p className="line-spacing">ວັນທີ:.........................</p>
-                <p className="line-spacing">ວັນທີ:............................</p>
+                <p>ວັນທີ:.........................</p>
+                <p>ວັນທີ:............................</p>
               </div>
 
               <div
@@ -259,11 +295,10 @@ export default function Details({ data }) {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    lineHeight: "0.8"
                   }}
                 >
-                  <h4 >ຜູ້ຊື້</h4>
-                  <p >(ລາຍເຊັນ ແລະ ປະທັບຕາ)</p>
+                  <h4>ຜູ້ຊື້</h4>
+                  <p>(ລາຍເຊັນ ແລະ ປະທັບຕາ)</p>
                 </div>
                 <div
                   style={{
@@ -271,7 +306,6 @@ export default function Details({ data }) {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    lineHeight: "0.8"
                   }}
                 >
                   <h4>ຜູ້ຂາຍ</h4>

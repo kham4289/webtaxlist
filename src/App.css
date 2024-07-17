@@ -91,16 +91,16 @@ tr:nth-child(even) {
   border: none;
   outline: none;
   font-family: noto sans lao;
-  font-size: 16px;
+  font-size: 14px;
   background: none;
-  max-width: 100px;
+  max-width: 31%;
   color: #2b2c2c;
 }
 .province{
   border: none;
   outline: none;
   font-family: noto sans lao;
-  font-size: 16px;
+  font-size: 14px;
   background: none;
   max-width: 150px;
   color: #2b2c2c;
@@ -112,7 +112,7 @@ tr:nth-child(even) {
   font-size: 14px;
   font-weight: bold;
   background: none;
-  width: 70%;
+  width: 96%;
   color: #2b2c2c;
  
 }
@@ -137,6 +137,9 @@ tr:nth-child(even) {
 
 .detail{
   border: 1px solid;
+}
+.line-spacing{
+  line-height: 0.8;
 }
 
 

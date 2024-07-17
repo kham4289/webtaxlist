@@ -11,6 +11,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 import Details from "../../components/Details";
+// import Postpait_Details from "../../components/Postpaid_Details";
 import * as React from "react";
 import { Stack } from "@mui/system";
 import { useSearchParams, useLocation } from "react-router-dom";
@@ -338,6 +339,7 @@ export default function NotSent() {
               <DialogContent>
                 <DialogContentText>
                   <Details data={showDetailById} />
+                  {/* <Postpait_Details data={showDetailById} /> */}
                 </DialogContentText>
               </DialogContent>
             </div>
