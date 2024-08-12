@@ -93,7 +93,7 @@ tr:nth-child(even) {
   font-family: noto sans lao;
   font-size: 14px;
   background: none;
-  max-width: 31%;
+  max-width: 34%;
   color: #2b2c2c;
 }
 .province{
@@ -139,8 +139,11 @@ tr:nth-child(even) {
   border: 1px solid;
 }
 .line-spacing{
-  line-height: 0.8;
+  line-height: 0.6;
 }
-
+.table_size{
+  font-size: 12px;
+  font-weight: 100;
+}
 
     

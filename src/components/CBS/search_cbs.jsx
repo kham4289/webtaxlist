@@ -34,7 +34,7 @@ export default function search_cbs() {
     const OponPDF = async () => {
       try {
         const response = await fetch(
-          `http://172.28.14.225:2024/tplus-service/update-pdf/BILL_${formateDate}/${formateDate}_REL_BILL/${formateDate}_${phone.CustomerID}.pdf`,
+          `http://172.28.14.225:2024/tplus-service/update-pdf/BILL_${formateDate}/${formateDate}_REL_BILL/${formateDate}_${phone.CustomerID}_Detail.pdf`,
           {
             method: "GET",
             headers: {

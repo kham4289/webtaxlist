@@ -137,7 +137,7 @@ export default function Details({ data }) {
                 </Grid>
               </Box>
              
-              <Table size="small" style={{ fontSize: "14px" }}>
+              <Table size="small" >
                 <TableHead>
                   <TableRow>
                     <TableCell>ລ/ດ</TableCell>
