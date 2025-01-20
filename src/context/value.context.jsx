@@ -47,7 +47,7 @@ export const ValueProvider = (props) => {
   const [second, setSecond] = useState(secondIntial);
   const [list, setList] = useState([]);
   const { isLoading, mutate, error } = useDatafinal();
-  const componentPDF = useRef();
+  const componentPDF = useRef(null);
   
 
   usePersistData({ setFirst, setList, setStep });

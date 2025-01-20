@@ -31,7 +31,9 @@ export const getSent = async (data) => {
 export const getDetail = async (data) => {
   try {
     let res = await instance.post("/taxTplus/details", data);
+
     return { dataDetail: res.data.detail };
+    
   } catch (error) {
     return null;
   }
