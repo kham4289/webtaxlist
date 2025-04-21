@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,4 +12,12 @@ export default defineConfig({
   preview: {
     port: 7878,
   },
+  // build: {
+  //   rollupOptions: {
+  //     input: resolve(__dirname, 'index.html'),
+  //   }
+  // },
+  // optimizeDeps: {
+  //   include: ['react', 'react-dom'],
+  // },
 })
