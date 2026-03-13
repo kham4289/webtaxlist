@@ -15,9 +15,7 @@ export const route = {
   GETBY_BILLING: "/Billing",
   GETBY_MANUAL: "/Manual",
   GET_CBS: "/cbs",
-
-
- 
+  SALES_LISTING_REPORT: "/salesListing/",
 };
 
 export const color = {

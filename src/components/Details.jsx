@@ -32,7 +32,22 @@ export default function Details({ data }) {
       })
       .catch((err) => console.log(err));
   }, [data]);
- 
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @media print {
+        .tax-invoice-container {
+          height: 66vh !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const handleUpdate = (e) => {
     const { value } = e.target;
     setIsTyping(true);
@@ -42,19 +57,6 @@ export default function Details({ data }) {
   return (
     <>
       <div ref={multiPrint.componentPDF}>
-        {/* <div
-        style={{
-          orientation: "portrait",
-          width: "100%",
-          height: "100vh",
-          backgroundImage: `url(${Bg})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-         
-          
-        }}
-      > */}
         {taxData.map((val, index) => {
           return (
             <Typography
@@ -67,10 +69,11 @@ export default function Details({ data }) {
               }}
             >
               <div
+                className="tax-invoice-container"
                 style={{
                   orientation: "portrait",
                   width: "100%",
-                  height: "66vh",
+                  height: "100vh",
                   backgroundImage: `url(${Bg})`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
@@ -520,7 +523,6 @@ export default function Details({ data }) {
             </Typography>
           );
         })}
-        {/* </div> */}
       </div>
     </>
   );

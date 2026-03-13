@@ -9,13 +9,15 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 
 import {} from "@mui/material";
 import Details from "../../components/Details";
 // import Detail from "../../components/Detail";
 import * as React from "react";
-import { Stack } from "@mui/system";
+import { Stack, width } from "@mui/system";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { getTaxMain, getSent } from "../../services/tax.services";
 import { format } from "date-fns";
@@ -53,6 +55,9 @@ export default function AllTax() {
   const [val, setVal] = useState({});
   const multiPrint = useContext(ValueContext);
   const { loading, mutate } = useCancel();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   const sendStatus = (data) => {
     return {
@@ -149,152 +154,154 @@ export default function AllTax() {
 
   const Table = () => (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>Taxpayer ID</th>
-            <th>Invoice</th>
-            <th>Buyer</th>
-            <th>Count of Dertail Lists</th>
-            <th>Total Sale Amount Before Tax</th>
-            <th>Service Fee</th>
-            <th>Total Excise Tax</th>
-            <th>Total VAT</th>
-            <th>Total Sale Amount include Tax</th>
-            <th>Discount</th>
-            <th>Created</th>
-            <th>Sent</th>
-            <th>ສະຖານະ</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {taxData.map((val, index) => {
-            return (
-              <tr key={index}>
-                <td>{val.TIN}</td>
-                <td>
-                  <p>{val.INV_NO}</p>
-                </td>
-                <td>
-                  <p>{val.BY_TIN}</p>
-                  <p>{val.BY_FULL_NM}</p>
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.SALE_CNT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.SUPL_AMT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.SVC_FEE}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.EXCISE_AMT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.VAT_AMT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.SALE_AMT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                    decimalScale={2}
-                    fixedDecimalScale={true}
-                  />
-                </td>
-                <td>
-                  <NumericFormat
-                    value={val.DISC_AMT}
-                    displayType="text"
-                    allowNegative
-                    thousandSeparator=","
-                  />
-                </td>
-                <td>{format(new Date(val.CDATE), "dd/MM/yyyy")}</td>
-                <td>
-                  {val?.Send_Date
-                    ? format(new Date(val.Send_Date), "dd/MM/yyyy")
-                    : ""}
-                </td>
+      <div style={{ overflowX: 'auto', width: '100%' }}>
+        <table style={{ minWidth: isMobile ? '800px' : '100%' }}>
+          <thead>
+            <tr>
+              <th style={{ whiteSpace: 'nowrap' }}>Taxpayer ID</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Invoice</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Buyer</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Count of Dertail Lists</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Total Sale Amount Before Tax</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Service Fee</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Total Excise Tax</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Total VAT</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Total Sale Amount include Tax</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Discount</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Created</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Sent</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Status</th>
+              <th style={{ whiteSpace: 'nowrap' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {taxData.map((val, index) => {
+              return (
+                <tr key={index}>
+                  <td>{val.TIN}</td>
+                  <td>
+                    <p>{val.INV_NO}</p>
+                  </td>
+                  <td>
+                    <p>{val.BY_TIN}</p>
+                    <p>{val.BY_FULL_NM}</p>
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.SALE_CNT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.SUPL_AMT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.SVC_FEE}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.EXCISE_AMT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.VAT_AMT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.SALE_AMT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </td>
+                  <td>
+                    <NumericFormat
+                      value={val.DISC_AMT}
+                      displayType="text"
+                      allowNegative
+                      thousandSeparator=","
+                    />
+                  </td>
+                  <td>{format(new Date(val.CDATE), "dd/MM/yyyy")}</td>
+                  <td>
+                    {val?.Send_Date
+                      ? format(new Date(val.Send_Date), "dd/MM/yyyy")
+                      : ""}
+                  </td>
 
-                <td>
-                  {val.Send_STATUS ? (
-                    <Chip color="success" label="ສົ່ງແລ້ວ" />
-                  ) : (
-                    <Chip color="error" label="ຍັງບໍທັນສົ່ງ" />
-                  )}
-                </td>
-                <td>
-                  {val.cancel_bill == true ? (
-                    <IconButton
-                      disabled
-                      onClick={(e) => {
-                        handleOpenConfirm(e, val);
-                      }}
-                    >
-                      <Chip disabled color="warning" label="ຍົກເລີກ" />
-                    </IconButton>
-                  ) : (
-                    <IconButton
-                      onClick={(e) => {
-                        handleOpenConfirm(e, val);
-                      }}
-                    >
-                      <Chip color="success" label="ຍົກເລີກ" />
-                    </IconButton>
-                  )}
-                </td>
-                <td>
-                  <Tooltip title="ເບິ່ງລາຍລະອຽດ">
-                    <IconButton
-                      onClick={() => {
-                        setShowDetailById(val.INV_NO);
-                        setOpen(true);
-                      }}
-                    >
-                      <RemoveRedEyeIcon />
-                    </IconButton>
-                  </Tooltip>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  <td>
+                    {val.Send_STATUS ? (
+                      <Chip color="success" label="ສົ່ງແລ້ວ" />
+                    ) : (
+                      <Chip color="error" label="ຍັງບໍທັນສົ່ງ" />
+                    )}
+                  </td>
+                  <td>
+                    {val.cancel_bill == true ? (
+                      <IconButton
+                        disabled
+                        onClick={(e) => {
+                          handleOpenConfirm(e, val);
+                        }}
+                      >
+                        <Chip disabled color="warning" label="ຍົກເລີກ" />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        onClick={(e) => {
+                          handleOpenConfirm(e, val);
+                        }}
+                      >
+                        <Chip color="success" label="ຍົກເລີກ" />
+                      </IconButton>
+                    )}
+                  </td>
+                  <td>
+                    <Tooltip title="ເບິ່ງລາຍລະອຽດ">
+                      <IconButton
+                        onClick={() => {
+                          setShowDetailById(val.INV_NO);
+                          setOpen(true);
+                        }}
+                      >
+                        <RemoveRedEyeIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       <Pagination
-        style={{ width: "100%" }}
+        style={{ width: "100%", marginTop: '20px' }}
         count={Math.ceil(taxCount / 20)}
         page={page}
         onChange={(e, value) => {
@@ -311,18 +318,26 @@ export default function AllTax() {
     </>
   );
   return (
-    <div className="box">
+    <div className="box" style={{ padding: isMobile ? '10px' : '20px' }}>
       <Stack direction={"column"} spacing={2}>
-        <h2 style={{ textAlign: "center", paddingBottom: 15 }}>
+        <h2 style={{ textAlign: "center", paddingBottom: 15, fontSize: isMobile ? '1.5rem' : '2rem' }}>
           ສະແດງລາຍການທັງຫມົດ TAX
         </h2>
-        <Stack direction="row" justifyContent={"space-around"}>
-          <Stack direction="row" spacing={2}>
+        <Stack 
+          direction={isMobile ? "column" : "row"} 
+          justifyContent={"space-around"}
+          spacing={isMobile ? 2 : 0}
+        >
+          <Stack 
+            direction={isMobile ? "column" : "row"} 
+            spacing={2}
+            width={isMobile ? "100%" : "auto"}
+          >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
-                  slotProps={{ textField: { size: "small" } }}
-                  sx={{ m: 1, minWidth: 100 }}
+                  slotProps={{ textField: { size: "small", fullWidth: isMobile } }}
+                  sx={{ m: 1, minWidth: isMobile ? '100%' : 100 }}
                   onChange={(value) => {
                     setFormDate(value);
                     navigate({
@@ -334,9 +349,10 @@ export default function AllTax() {
                   }}
                   label="ເລືອກວັນທີເດືອນປີ"
                 />
-                <label style={{ fontSize: 20, paddingTop: 5 }}>ຫາ</label>
+                <label style={{ fontSize: 20, paddingTop: 5, display: isMobile ? 'none' : 'block' }}>ຫາ</label>
                 <DatePicker
-                  slotProps={{ textField: { size: "small" } }}
+                  slotProps={{ textField: { size: "small", fullWidth: isMobile } }}
+                  sx={{ m: 1, minWidth: isMobile ? '100%' : 100 }}
                   onChange={(value) => {
                     setToDate(value);
                     navigate({
@@ -352,9 +368,15 @@ export default function AllTax() {
             </LocalizationProvider>
           </Stack>
 
-          <Stack direction="row" paddingTop="8px" spacing={2}>
+          <Stack 
+            direction="row" 
+            paddingTop={isMobile ? "0" : "8px"} 
+            spacing={2}
+            width={isMobile ? "100%" : "auto"}
+          >
             <TextField
               size="small"
+              fullWidth={isMobile}
               onChange={(e) => {
                 setSearchData(e.target.value);
                 navigate({

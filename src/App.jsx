@@ -1,4 +1,3 @@
-
 import "./App.css";
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
@@ -14,7 +13,9 @@ import Detail from "./components/Detail";
 import Cancel from "./pages/allTaxList/Cancel";
 import GetByManual from "./pages/allTaxList/GetByManual";
 import GetBysun from "./pages/allTaxList/getBysun";
-import Get_cbs from "./pages/CBS/get_cbs"
+import Get_cbs from "./pages/CBS/get_cbs";
+import Report from "./pages/salesListing/";
+
 function App() {
   return (
     <div className="App">
@@ -31,6 +32,7 @@ function App() {
             <Route path={`${route.GETBY_MANUAL}`} element={<GetByManual/>} />
             <Route path={`${route.GETBY_SUN}`} element={<GetBysun/>} />
             <Route path={`${route.GET_CBS}`} element={<Get_cbs/>} />
+            <Route path={route.SALES_LISTING_REPORT} element={<Report />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -148,8 +148,16 @@ export default function TopBar() {
                 >
                   ບີນ Postpaid
                 </Button>
+                <Button
+                  color="inherit"
+                  sx={{ ...btn }}
+                  onClick={() => {
+                    navigate(route.SALES_LISTING_REPORT);
+                  }}
+                >
+                  Sales
+                </Button>
               </Box>
-
               {/* <Button color="inherit">Login</Button> */}
             </Toolbar>
           </Container>
