@@ -13,8 +13,8 @@ import {
   useTheme,
 } from "@mui/material";
 
-import {} from "@mui/material";
-import Details from "../../components/Details";
+import { } from "@mui/material";
+import Details from "../../components/newDetails";
 // import Detail from "../../components/Detail";
 import * as React from "react";
 import { Stack, width } from "@mui/system";
@@ -323,13 +323,13 @@ export default function AllTax() {
         <h2 style={{ textAlign: "center", paddingBottom: 15, fontSize: isMobile ? '1.5rem' : '2rem' }}>
           ສະແດງລາຍການທັງຫມົດ TAX
         </h2>
-        <Stack 
-          direction={isMobile ? "column" : "row"} 
+        <Stack
+          direction={isMobile ? "column" : "row"}
           justifyContent={"space-around"}
           spacing={isMobile ? 2 : 0}
         >
-          <Stack 
-            direction={isMobile ? "column" : "row"} 
+          <Stack
+            direction={isMobile ? "column" : "row"}
             spacing={2}
             width={isMobile ? "100%" : "auto"}
           >
@@ -368,9 +368,9 @@ export default function AllTax() {
             </LocalizationProvider>
           </Stack>
 
-          <Stack 
-            direction="row" 
-            paddingTop={isMobile ? "0" : "8px"} 
+          <Stack
+            direction="row"
+            paddingTop={isMobile ? "0" : "8px"}
             spacing={2}
             width={isMobile ? "100%" : "auto"}
           >
@@ -397,9 +397,9 @@ export default function AllTax() {
           >
             <div style={{ width: "100%", height: "100%" }}>
               <DialogContent>
-                <DialogContentText>
+                <div style={{ width: "100%" }}>
                   <Details data={showDetailById} />
-                </DialogContentText>
+                </div>
               </DialogContent>
             </div>
 

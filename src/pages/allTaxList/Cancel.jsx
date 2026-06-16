@@ -11,8 +11,8 @@ import {
   DialogContentText,
 } from "@mui/material";
 
-import {} from "@mui/material";
-import Details from "../../components/Details";
+import { } from "@mui/material";
+import Details from "../../components/Detail";
 // import Detail from "../../components/Detail";
 import * as React from "react";
 import { Stack } from "@mui/system";

@@ -48,7 +48,7 @@ export const ValueProvider = (props) => {
   const [list, setList] = useState([]);
   const { isLoading, mutate, error } = useDatafinal();
   const componentPDF = useRef(null);
-  
+
 
   usePersistData({ setFirst, setList, setStep });
 
@@ -87,15 +87,82 @@ export const ValueProvider = (props) => {
     };
     mutate(data);
   };
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    pageStyle: `
+     @page {
+       size: A4;
+       margin: 0;
+     }
+     @media print {
+       html, body {
+         margin: 0 !important;
+         padding: 0 !important;
+         width: 210mm !important;
+         background: none !important;
+         -webkit-print-color-adjust: exact !important;
+         print-color-adjust: exact !important;
+         color-adjust: exact !important;
+       }
 
-   const generatePDF = useReactToPrint({
-     content: () => componentPDF.current,
-     onAfterPrint: () => {
-       toast.success("Successfully !", { position: toast.POSITION.TOP_RIGHT });
-       setTimeout(() => {}, 2000);
-     },
-   });
-   
+       * {
+         -webkit-print-color-adjust: exact !important;
+         print-color-adjust: exact !important;
+         color-adjust: exact !important;
+         box-sizing: border-box !important;
+       }
+
+       .a4-page {
+         width: 210mm !important;
+         height: 297mm !important;
+         page-break-after: always !important;
+         overflow: hidden !important;
+         display: flex !important;
+         flex-direction: column !important;
+         margin: 0 !important;
+         padding: 0 !important;
+         position: relative !important;
+       }
+
+       .tax-invoice-container {
+         width: 210mm !important;
+         -webkit-print-color-adjust: exact !important;
+         print-color-adjust: exact !important;
+         color-adjust: exact !important;
+         background-repeat: no-repeat !important;
+         background-size: 100% 100% !important;
+         background-position: center !important;
+         page-break-inside: avoid !important;
+         break-inside: avoid !important;
+         overflow: hidden !important;
+       }
+
+       .page-footer-img {
+         -webkit-print-color-adjust: exact !important;
+         print-color-adjust: exact !important;
+         color-adjust: exact !important;
+         position: absolute !important;
+         bottom: 0 !important;
+         left: 0 !important;
+         width: 100% !important;
+         height: 80px !important;
+         object-fit: fill !important;
+         display: block !important;
+       }
+
+       .a4-page table {
+         font-size: inherit !important;
+         width: 100% !important;
+         table-layout: fixed !important;
+       }
+     }
+  `,
+    onAfterPrint: () => {
+      toast.success("Successfully !", { position: toast.POSITION.TOP_RIGHT });
+      setTimeout(() => { }, 2000);
+    },
+  });
+
   return (
     <ValueContext.Provider
       value={{

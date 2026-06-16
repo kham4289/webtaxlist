@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-import Details from "../../components/Details";
+import Details from "../../components/Detail";
 import * as React from "react";
 import { Stack } from "@mui/system";
 import { useSearchParams, useLocation } from "react-router-dom";

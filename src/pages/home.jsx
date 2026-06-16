@@ -129,75 +129,75 @@ export default function Home() {
               <MyTextField
                 label="Taxpayer ID"
                 // placeholder="Taxpayer ID"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Invioce ID"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Invoice Date"
                 placeholder="YYYYMMDD"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Buyer TIN"
                 // placeholder="ID"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Buyer Name"
                 // placeholder="ID"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Count of Detail Lists"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Total Sale amount Before Tax"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Service Fee"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Total Excise Tax"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Total VAT"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Total Sale Amount include Taxes"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Discount Amount"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Number of Cancel"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
               <MyTextField
                 label="Cancel Amount"
-                onChange={() => {}}
+                onChange={() => { }}
                 required={true}
               />
             </div>

@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogContentText,
 } from "@mui/material";
-import Details from "../../components/Details";
+import Details from "../../components/Detail";
 // import Postpait_Details from "../../components/Postpaid_Details";
 import * as React from "react";
 import { Stack } from "@mui/system";

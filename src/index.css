@@ -23,7 +23,7 @@ body {
   place-items: center; */
   min-width: 320px;
   min-height: 100vh;
-} 
+}
 
 /* h1 {
   font-size: 3.2em;
@@ -36,3 +36,78 @@ body {
   -o-background-size: cover;
   background-position: center;
 } */
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0 !important;
+  }
+
+  html,
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    background: none !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* The full A4 page wrapper — one per printed page */
+  .a4-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    page-break-after: always !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+
+  /* Each section (Tax Invoice / Service Fee) */
+  .tax-invoice-container {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    background-repeat: no-repeat !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+  }
+
+  /* Footer image at bottom of page */
+  .page-footer-img {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 80px !important;
+    object-fit: fill !important;
+    display: block !important;
+  }
+
+  /* Override global table/cell styles from App.css */
+  .a4-page table {
+    font-size: inherit !important;
+    table-layout: fixed !important;
+  }
+
+  /* Hide non-print UI */
+  .no-print {
+    display: none !important;
+  }
+}
