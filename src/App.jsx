@@ -12,7 +12,7 @@ import Sent from "./pages/allTaxList/sent";
 import Detail from "./components/Detail";
 import Cancel from "./pages/allTaxList/Cancel";
 import GetByManual from "./pages/allTaxList/GetByManual";
-import GetBysun from "./pages/allTaxList/getBysun";
+import GetBysun from "./pages/allTaxList/GetBysun";
 import Get_cbs from "./pages/CBS/get_cbs";
 import Report from "./pages/salesListing/";
 
