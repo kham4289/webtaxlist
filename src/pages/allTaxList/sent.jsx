@@ -226,7 +226,7 @@ export default function Sent() {
                   <Tooltip title="ເບິ່ງລາຍລະອຽດ">
                     <IconButton
                       onClick={() => {
-                        setShowDetailById(val.INV_NO);
+                        setShowDetailById(val);
                         setOpen(true);
                       }}
                     >

@@ -45,7 +45,7 @@ export default function AllTax() {
   const nodeRef = React.useRef(null);
   const [taxData, setTaxData] = React.useState([]);
   const [searchParams] = useSearchParams();
-  const getPageNumber = Number(searchParams.get("page" || 1));
+  const getPageNumber = Number(searchParams.get("page") || 1);
   const [taxCount, setTaxCount] = useState(0);
   const [searchData, setSearchData] = useState("");
   const [formDate, setFormDate] = useState("");
@@ -286,7 +286,7 @@ export default function AllTax() {
                     <Tooltip title="ເບິ່ງລາຍລະອຽດ">
                       <IconButton
                         onClick={() => {
-                          setShowDetailById(val.INV_NO);
+                          setShowDetailById(val);
                           setOpen(true);
                         }}
                       >
@@ -340,6 +340,7 @@ export default function AllTax() {
                   sx={{ m: 1, minWidth: isMobile ? '100%' : 100 }}
                   onChange={(value) => {
                     setFormDate(value);
+                    setToDate((prev) => prev || value);
                     navigate({
                       pathname: filter.pathname,
                       search: `?${createSearchParams({
@@ -355,6 +356,7 @@ export default function AllTax() {
                   sx={{ m: 1, minWidth: isMobile ? '100%' : 100 }}
                   onChange={(value) => {
                     setToDate(value);
+                    setFormDate((prev) => prev || value);
                     navigate({
                       pathname: filter.pathname,
                       search: `?${createSearchParams({

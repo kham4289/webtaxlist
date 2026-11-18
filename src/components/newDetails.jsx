@@ -10,6 +10,38 @@ import Footer from "../assets/picture/footer.png";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
+const LAO_DIGITS = ["ສູນ", "ໜຶ່ງ", "ສອງ", "ສາມ", "ສີ່", "ຫ້າ", "ຫົກ", "ເຈັດ", "ແປດ", "ເກົ້າ"];
+const LAO_GROUPS = ["", "ພັນ", "ລ້ານ", "ຕື້", "ພັນຕື້", "ລ້ານຕື້"];
+
+// Reads 1–999 in Lao, e.g. 121 -> ໜຶ່ງຮ້ອຍຊາວເອັດ
+const laoHundreds = (n) => {
+    const hundreds = Math.floor(n / 100);
+    const tens = Math.floor((n % 100) / 10);
+    const ones = n % 10;
+    let text = "";
+    if (hundreds) text += LAO_DIGITS[hundreds] + "ຮ້ອຍ";
+    if (tens === 1) text += "ສິບ";
+    else if (tens === 2) text += "ຊາວ";
+    else if (tens) text += LAO_DIGITS[tens] + "ສິບ";
+    if (ones === 1 && tens) text += "ເອັດ";
+    else if (ones) text += LAO_DIGITS[ones];
+    return text;
+};
+
+// Amount in Lao words, e.g. 60000 -> ຫົກສິບພັນກີບ
+const laoAmountToText = (amount) => {
+    const value = Number(amount) || 0;
+    let rest = Math.round(Math.abs(value));
+    if (rest === 0) return "ສູນກີບ";
+    let text = "";
+    for (let group = 0; rest > 0; group++) {
+        const chunk = rest % 1000;
+        if (chunk) text = laoHundreds(chunk) + LAO_GROUPS[group] + text;
+        rest = Math.floor(rest / 1000);
+    }
+    return (value < 0 ? "ລົບ" : "") + text + "ກີບ";
+};
+
 export default function Details({ data }) {
     const [taxData, setTaxData] = useState([]);
     const [updateFullName, setUpdateFullName] = useState("");
@@ -18,24 +50,6 @@ export default function Details({ data }) {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
-    useEffect(() => {
-        setTaxData([{}]); // Give it 1 empty item so your design ALWAYS shows up!
-        getDetail({ searchTransid: data })
-            .then((resData) => {
-                if (resData && resData.dataDetail && resData.dataDetail.length > 0) {
-                    setTaxData(resData.dataDetail);
-                } else {
-                    setTaxData([{ INV_NO: data, Transid: data }]);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                setTaxData([{ INV_NO: data, Transid: data }]);
-            });
-    }, [data]);
-
-
-
     const handleUpdate = (e) => {
         const { value } = e.target;
         setIsTyping(true);
@@ -43,6 +57,84 @@ export default function Details({ data }) {
     };
     const PARA_MB = "0px";
     const ROW_MT = "5px";
+
+    const normalizeKey = (key) => String(key).toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    const getValue = (source, ...keys) => {
+        if (!source || typeof source !== "object") return undefined;
+
+        for (const key of keys) {
+            if (source[key] !== undefined && source[key] !== null) return source[key];
+        }
+
+        const sourceKeys = Object.keys(source);
+        for (const key of keys) {
+            const matchedKey = sourceKeys.find((sourceKey) => normalizeKey(sourceKey) === normalizeKey(key));
+            if (matchedKey && source[matchedKey] !== undefined && source[matchedKey] !== null) return source[matchedKey];
+        }
+
+        return undefined;
+    };
+
+    const normalizeDetailRows = (detail) => {
+        const detailData = getValue(detail, "showdata", "showData", "show_data", "dataArray", "data", "rows", "items") || detail;
+        if (Array.isArray(detailData)) return detailData;
+        if (detailData && typeof detailData === "object") return [detailData];
+        return [];
+    };
+
+    const getDetailSearchId = (source) => {
+        if (source && typeof source === "object") {
+            return getValue(source, "Transid", "TRANSID", "transid", "INV_NO", "inv_no", "invoiceNo", "InvoiceNo");
+        }
+
+        return source;
+    };
+
+    const getFallbackData = () => {
+        if (data && typeof data === "object") return data;
+
+        const detailSearchId = getDetailSearchId(data);
+        return detailSearchId ? { INV_NO: detailSearchId, Transid: detailSearchId } : {};
+    };
+
+    const getNumber = (...values) => {
+        const value = values.find((item) => item !== undefined && item !== null && item !== "");
+        const numberValue = Number(value);
+        return Number.isNaN(numberValue) ? 0 : numberValue;
+    };
+
+    const getSaleAmount = (val) => getNumber(getValue(val, "Sale_AMT", "SALE_AMT", "sale_amt", "saleAmount"));
+    const getVatAmount = (val) => getNumber(getValue(val, "VAT_AMT", "vat_amt", "vatAmount"));
+    const getTotalAmount = (val) => getNumber(getValue(val, "SALE_SMT", "Sale_SMT", "sale_smt", "saleSmt"), getSaleAmount(val));
+    const getSaleAmountWithoutVat = (val) => {
+        const saleAmount = getSaleAmount(val);
+        const vatAmount = getVatAmount(val);
+        return vatAmount ? saleAmount - vatAmount : saleAmount / 1.1;
+    };
+
+    useEffect(() => {
+        const fallbackData = getFallbackData();
+        const detailSearchId = getDetailSearchId(data);
+
+        setTaxData([fallbackData]);
+
+        if (!detailSearchId) return;
+
+        getDetail({ searchTransid: String(getValue(data, "INV_NO", "inv_no") ?? "") })
+            .then((resData) => {
+                const detailRows = normalizeDetailRows(resData?.dataDetail);
+                if (detailRows.length > 0) {
+                    setTaxData(detailRows.map((row) => ({ ...fallbackData, ...row })));
+                } else {
+                    setTaxData([fallbackData]);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                setTaxData([fallbackData]);
+            });
+    }, [data]);
 
     const baseInput = {
         border: "none",
@@ -63,6 +155,9 @@ export default function Details({ data }) {
         <>
             <div ref={multiPrint.componentPDF}>
                 {taxData.map((val, index) => {
+                    const rawList = getValue(val, "list", "List", "items", "detailList");
+                    const lineItems = Array.isArray(rawList) ? rawList : [];
+                    const totalDue = getTotalAmount(val) + 0; // III = I + II
                     return (
                         <Typography
                             key={index}
@@ -179,7 +274,8 @@ export default function Details({ data }) {
 
                                                         {/* No - row 1 */}
                                                         <div style={{ marginBottom: ROW_MT, fontWeight: "bold" }}>
-                                                            ເລກທີ / No: {val.Transid}
+                                                            {/* ເລກທີ / No: {getValue(val, "Transid", "TRANSID", "transid", "INV_NO", "inv_no")} */}
+                                                             ເລກທີ / No: {getValue(val, "INV_NO", "inv_no")}
                                                         </div>
 
                                                         {/* Date - row 2 */}
@@ -195,7 +291,7 @@ export default function Details({ data }) {
                                                                 name="BY_FULL_NM"
                                                                 className="inputtax"
                                                                 style={{ ...baseInput, flex: 1 }}
-                                                                value={updateFullName !== "" || isTyping ? updateFullName : val.BY_FULL_NM}
+                                                                value={updateFullName !== "" || isTyping ? updateFullName : getValue(val, "BY_FULL_NM", "by_full_nm", "buyerName") || ""}
                                                             />
                                                         </div>
 
@@ -203,7 +299,7 @@ export default function Details({ data }) {
                                                         <div style={{ display: "flex", alignItems: "flex-end", marginBottom: ROW_MT }}>
                                                             <span style={{ whiteSpace: "nowrap", paddingRight: "6px" }}>ເລກປະຈຳຕົວຜູ້ເສຍອາກອນ</span>
                                                             <span style={{ borderBottom: "1px dotted #000", flex: 1, fontWeight: "normal" }}>
-                                                                {val.BY_TIN}
+                                                                {getValue(val, "BY_TIN", "by_tin")}
                                                             </span>
                                                         </div>
 
@@ -232,7 +328,7 @@ export default function Details({ data }) {
                                                                 paddingLeft: "3px",
                                                                 fontWeight: "normal"
                                                             }}>
-                                                                {val.TIN}
+                                                                {getValue(val, "TIN", "tin")}
                                                             </span>
                                                             <span style={{ whiteSpace: "nowrap" }}>ແຟັກ</span>
                                                             <span style={{ borderBottom: "1px dotted #000", flex: 1 }}></span>
@@ -282,24 +378,36 @@ export default function Details({ data }) {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                                                        <tr key={num} style={{ height: "12px" }}>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "center" }}>{num}</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "right" }}>&nbsp;</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "right" }}>&nbsp;</td>
-                                                            <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
-                                                        </tr>
-                                                    ))}
+                                                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => {
+                                                        const item = lineItems[num - 1];
+                                                        const quantity = item ? getNumber(getValue(item, "SALE_CNT", "sale_cnt", "saleCnt")) : null;
+                                                        const unitPrice = item ? getSaleAmount(item) : null;
+                                                        const amount = item ? quantity * unitPrice : null;
+                                                        return (
+                                                            <tr key={num} style={{ height: "12px" }}>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "center" }}>{num}</td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px" }}>{item ? (getValue(item, "HS_NM", "hs_nm", "hsName") ?? getValue(val, "Data_type", "DATA_TYPE", "data_type", "dataType")) : "\u00a0"}</td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "right" }}>
+                                                                    {item ? <NumericFormat value={quantity} displayType="text" thousandSeparator="," /> : "\u00a0"}
+                                                                </td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "right" }}>
+                                                                    {item ? <NumericFormat value={unitPrice} displayType="text" thousandSeparator="," decimalScale={2} /> : "\u00a0"}
+                                                                </td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px", textAlign: "right" }}>
+                                                                    {item ? <NumericFormat value={amount} displayType="text" thousandSeparator="," decimalScale={2} /> : "\u00a0"}
+                                                                </td>
+                                                                <td style={{ border: "1px solid #000", padding: "0px 4px" }}>&nbsp;</td>
+                                                            </tr>
+                                                        );
+                                                    })}
 
                                                     {/* Summary rows */}
                                                     <tr>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
-                                                        <td colSpan="4" style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right", fontWeight: "bold" }}>ມູນຄ່າລວມບໍ່ລວມອາກອນ:</td>
+                                                        <td colSpan="4" style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right", fontWeight: "bold" }}>ມູນຄ່າຂາຍບໍ່ມີອາກອນ:</td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right" }}>
-                                                            <NumericFormat value={val.SUPL_AMT || 0} displayType="text" thousandSeparator="," />
+                                                            <NumericFormat value={getSaleAmountWithoutVat(val)} displayType="text" thousandSeparator="," decimalScale={2} />
                                                         </td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
                                                     </tr>
@@ -307,7 +415,7 @@ export default function Details({ data }) {
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
                                                         <td colSpan="4" style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right", fontWeight: "bold" }}>ອັດຕາອາກອນມູນຄ່າເພີ່ມ/VAT ເປັນຈຳນວນເງິນ:</td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right" }}>
-                                                            <NumericFormat value={val.VAT_AMT || 0} displayType="text" thousandSeparator="," />
+                                                            <NumericFormat value={getVatAmount(val)} displayType="text" thousandSeparator="," />
                                                         </td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
                                                     </tr>
@@ -315,7 +423,7 @@ export default function Details({ data }) {
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
                                                         <td colSpan="4" style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right", fontWeight: "bold" }}>ລວມມູນຄ່າທັງໝົດລວມອາກອນ:</td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px", textAlign: "right" }}>
-                                                            <NumericFormat value={val.SALE_AMT || 0} displayType="text" thousandSeparator="," />
+                                                            <NumericFormat value={getTotalAmount(val)} displayType="text" thousandSeparator="," />
                                                         </td>
                                                         <td style={{ border: "1px solid #000", padding: "2px 4px" }}>&nbsp;</td>
                                                     </tr>
@@ -331,7 +439,7 @@ export default function Details({ data }) {
                                                         <td style={{ border: "1px solid #000", padding: "5px 4px", textAlign: "center", fontWeight: "bold", color: "#000", fontSize: "14px" }}>I.</td>
                                                         <td colSpan="4" style={{ border: "1px solid #000", padding: "5px 4px", fontWeight: "bold", color: "#000", fontSize: "14px" }}>ລວມມູນຄ່າຂາຍ</td>
                                                         <td style={{ border: "1px solid #000", padding: "5px 4px", textAlign: "right", fontWeight: "bold", fontSize: "12px" }}>
-                                                            <NumericFormat value={val.SALE_AMT || 0} displayType="text" thousandSeparator="," />
+                                                            <NumericFormat value={getTotalAmount(val)} displayType="text" thousandSeparator="," />
                                                         </td>
                                                         <td style={{ border: "1px solid #000", padding: "5px 4px" }}>&nbsp;</td>
                                                     </tr>
@@ -386,7 +494,9 @@ export default function Details({ data }) {
                                             </div>
 
                                             <div style={{ fontWeight: "bold", marginBottom: "4px" }}>
-                                                <span style={{ fontSize: "12px" }}>ເລກທີ / No: {val.Transid}-S</span>
+                                               
+                                                {/* <span style={{ fontSize: "12px" }}>ເລກທີ / No: {getValue(val, "Transid", "TRANSID", "transid", "INV_NO", "inv_no")}-S</span> */}
+                                                 <span style={{ fontSize: "12px" }}>ເລກທີ / No: {getValue(val,  "INV_NO", "inv_no")}</span>
                                             </div>
 
                                             {/* Section II table */}
@@ -403,7 +513,7 @@ export default function Details({ data }) {
                                                         <td style={{ border: "1px solid #000", padding: "5px 6px", textAlign: "center", fontWeight: "bold", color: "#000", fontSize: "14px" }}>II.</td>
                                                         <td style={{ border: "1px solid #000", padding: "5px 6px", fontWeight: "bold", color: "#000", fontSize: "13px" }}>ຄ່າຮັກສາຄວາມປອດໄພ</td>
                                                         <td style={{ border: "1px solid #000", padding: "5px 6px", textAlign: "right" }}>
-                                                            <NumericFormat value={val.SecurityFee} displayType={"text"} thousandSeparator="," />
+                                                            <NumericFormat value={0} displayType={"text"} thousandSeparator="," />
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -418,14 +528,14 @@ export default function Details({ data }) {
                                                             ລວມມູນຄ່າທັງໝົດທີ່ຕ້ອງຊຳລະ = I+II
                                                         </td>
                                                         <td style={{ width: "28%", border: "1px solid #000", padding: "5px 6px", textAlign: "right", fontWeight: "bold" }}>
-                                                            <NumericFormat value={(Number(val.SALE_AMT) || 0) + (Number(val.SecurityFee) || 0)} displayType={"text"} thousandSeparator="," />
+                                                            <NumericFormat value={totalDue} displayType={"text"} thousandSeparator="," />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td colSpan="3" style={{ border: "1px solid #000", padding: "3px 6px", fontSize: "11px" }}>
                                                             <div style={{ display: "flex", alignItems: "center" }}>
                                                                 <span style={{ fontWeight: "bold", paddingRight: "6px", whiteSpace: "nowrap" }}>ຈຳນວນເງິນເປັນໂຕໜັງສື:</span>
-                                                                <span style={{ borderBottom: "1px dotted #000", flex: 1, height: "0" }}></span>
+                                                                <span style={{ borderBottom: "1px dotted #000", flex: 1, fontWeight: "bold" }}>{laoAmountToText(totalDue)}</span>
                                                             </div>
                                                         </td>
                                                     </tr>
